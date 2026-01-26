@@ -1809,7 +1809,7 @@
                 <p class="about-text">
                     Opinion Analyst is a community-built analytics platform developed within the Opinion Lab ecosystem. It provides market insights and analysis across the platform but does not offer financial advice. Users are responsible for conducting their own research before making any trading or investment decisions.
                 </p>
-               
+              
             </div>
         </section>
 
@@ -1856,10 +1856,6 @@
                             <span class="footer-link-icon">𝕏</span>
                             <span>Opinion Analyst</span>
                         </a>
-                         <a href="https://x.com/coach00696" target="_blank" rel="noopener noreferrer" class="footer-link">
-                            <span class="footer-link-icon">👤</span>
-                            <span>Platform Founder</span>
-                        </a>
                     </div>
                 </div>
 
@@ -1871,7 +1867,10 @@
                             <span class="footer-link-icon">𝕏</span>
                             <span>Follow Opinion Lab</span>
                         </a>
-                       
+                        <a href="https://x.com/coach00696" target="_blank" rel="noopener noreferrer" class="footer-link">
+                            <span class="footer-link-icon">👤</span>
+                            <span>Platform Founder</span>
+                        </a>
                     </div>
                 </div>
 
@@ -1956,6 +1955,50 @@
         let adminUsers = [
             { username: SUPER_ADMIN_USERNAME, password: SUPER_ADMIN_PASSWORD, role: 'super', active: true }
         ];
+
+        // LocalStorage Functions
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem('opinionAnalyst_markets', JSON.stringify(markets));
+                localStorage.setItem('opinionAnalyst_adminUsers', JSON.stringify(adminUsers));
+                localStorage.setItem('opinionAnalyst_manualOrder', JSON.stringify(manualOrder));
+                localStorage.setItem('opinionAnalyst_currentSortMode', currentSortMode);
+            } catch (error) {
+                console.error('Error saving to localStorage:', error);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const savedMarkets = localStorage.getItem('opinionAnalyst_markets');
+                const savedAdminUsers = localStorage.getItem('opinionAnalyst_adminUsers');
+                const savedManualOrder = localStorage.getItem('opinionAnalyst_manualOrder');
+                const savedSortMode = localStorage.getItem('opinionAnalyst_currentSortMode');
+
+                if (savedMarkets) {
+                    markets = JSON.parse(savedMarkets);
+                }
+
+                if (savedAdminUsers) {
+                    const parsed = JSON.parse(savedAdminUsers);
+                    // Make sure super admin is always present
+                    const hasSuperAdmin = parsed.some(a => a.username === SUPER_ADMIN_USERNAME);
+                    if (hasSuperAdmin) {
+                        adminUsers = parsed;
+                    }
+                }
+
+                if (savedManualOrder) {
+                    manualOrder = JSON.parse(savedManualOrder);
+                }
+
+                if (savedSortMode) {
+                    currentSortMode = savedSortMode;
+                }
+            } catch (error) {
+                console.error('Error loading from localStorage:', error);
+            }
+        }
 
         // Navigate to Dashboard
         function goToDashboard() {
@@ -2099,48 +2142,18 @@
             return text.replace(urlRegex, '<a href="$1" target="_blank" style="color: #00ff88; text-decoration: underline;">$1</a>');
         }
 
-        // Initialize with sample data
-        const sampleMarkets = [
-            {
-                id: 1,
-                title: "US Fed Rate Decision in January?",
-                category: "Macro",
-                image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop",
-                analysis: "The Federal Reserve's January meeting represents a critical juncture for monetary policy. Recent economic indicators show persistent inflation despite previous rate hikes, while employment remains robust. Market participants are divided on whether the Fed will pause its tightening cycle or implement another 25 basis point increase. Key factors include the latest CPI data, wage growth trends, and signals from Fed officials. The decision will significantly impact equity markets, bond yields, and currency valuations globally.",
-                analysisImage: null,
-                likes: 0,
-                comments: [],
-                createdBy: 'coach',
-                createdAt: new Date().toLocaleString()
-            },
-            {
-                id: 2,
-                title: "What price will BNB hit in January?",
-                category: "Crypto",
-                image: "https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=800&auto=format&fit=crop",
-                analysis: "BNB has shown remarkable resilience in the current market cycle, supported by strong fundamentals from the Binance ecosystem. The token's utility across multiple chains, consistent burn mechanism, and expanding DeFi applications provide solid support levels. Technical analysis suggests key resistance at $350 with strong support at $280. The upcoming BNB Chain upgrades and increasing institutional adoption could drive price action. Market sentiment remains cautiously optimistic as regulatory clarity improves.",
-                analysisImage: null,
-                likes: 0,
-                comments: [],
-                createdBy: 'coach',
-                createdAt: new Date().toLocaleString()
-            },
-            {
-                id: 3,
-                title: "Will Silver hit ... by end of January?",
-                category: "Business",
-                image: "https://images.unsplash.com/photo-1610375461246-83df859d849d?w=800&auto=format&fit=crop",
-                analysis: "Silver markets are experiencing heightened volatility driven by industrial demand and its role as an inflation hedge. The gold-to-silver ratio suggests potential upside, while industrial applications in solar panels and electronics provide fundamental support. Recent supply chain constraints and increased investment demand from ETFs have tightened physical markets. Technical indicators show silver testing key resistance levels, with momentum building for a potential breakout above $26 per ounce.",
-                analysisImage: null,
-                likes: 0,
-                comments: [],
-                createdBy: 'coach',
-                createdAt: new Date().toLocaleString()
-            }
-        ];
+        // Initialize with sample data (empty - admin will add markets)
+        const sampleMarkets = [];
 
         // Initialize markets
-        markets = [...sampleMarkets];
+        loadFromLocalStorage();
+        
+        // If no saved markets, use sample data
+        if (markets.length === 0) {
+            markets = [...sampleMarkets];
+            saveToLocalStorage();
+        }
+        
         renderMarkets();
 
         // Setup undo/redo tracking after DOM is ready
@@ -2257,6 +2270,9 @@
                 createdAt: new Date().toLocaleString()
             });
             
+            // Save to localStorage
+            saveToLocalStorage();
+            
             // Display credentials
             document.getElementById('displayUsername').textContent = username;
             document.getElementById('displayPassword').textContent = password;
@@ -2304,6 +2320,7 @@
             const admin = adminUsers.find(a => a.username === username);
             if (admin) {
                 admin.active = !admin.active;
+                saveToLocalStorage();
                 renderAdminList();
                 showToast(admin.active ? 'Admin access restored!' : 'Admin access revoked!');
             }
@@ -2392,6 +2409,7 @@
                         market.analysisImage = URL.createObjectURL(analysisImageInput.files[0]);
                     }
                     
+                    saveToLocalStorage();
                     showToast('Market updated successfully!');
                 }
                 
@@ -2414,6 +2432,7 @@
                 };
                 
                 markets.unshift(newMarket);
+                saveToLocalStorage();
                 showToast('Market created successfully!');
             }
             
@@ -2432,6 +2451,20 @@
         function renderMarkets(filteredMarkets = null) {
             const marketsToRender = filteredMarkets || markets;
             const grid = document.getElementById('marketsGrid');
+            
+            // Show empty state if no markets
+            if (marketsToRender.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;">📊</div>
+                        <h3 style="font-size: 1.5rem; color: var(--text-primary); margin-bottom: 0.5rem;">No Markets Yet</h3>
+                        <p style="color: var(--text-secondary); font-size: 1rem;">
+                            ${isAdmin ? 'Click "Add Market" to create your first market analysis!' : 'Check back soon for market analysis!'}
+                        </p>
+                    </div>
+                `;
+                return;
+            }
             
             grid.innerHTML = marketsToRender.map(market => `
                 <div class="market-card" data-id="${market.id}" draggable="${isAdmin && currentSortMode === 'manual'}" ondragstart="handleDragStart(event)" ondragend="handleDragEnd(event)" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
@@ -2514,6 +2547,9 @@
             // Update manual order
             manualOrder = markets.map(m => m.id);
             
+            // Save to localStorage
+            saveToLocalStorage();
+            
             // Re-render
             renderMarkets();
             
@@ -2528,6 +2564,7 @@
             
             if (confirm('Are you sure you want to delete this market?')) {
                 markets = markets.filter(m => m.id !== id);
+                saveToLocalStorage();
                 renderMarkets();
                 showToast('Market deleted successfully!');
             }
@@ -2595,6 +2632,7 @@
                         return 0;
                     });
                 }
+                saveToLocalStorage();
                 renderMarkets();
                 showToast('Drag and drop to reorder markets');
                 return;
@@ -2621,6 +2659,7 @@
             }
             
             markets = sorted;
+            saveToLocalStorage();
             renderMarkets();
         }
 
@@ -2702,6 +2741,7 @@
             }
             
             document.getElementById('likeCount').textContent = market.likes;
+            saveToLocalStorage();
         });
 
         // Trade Button
@@ -2727,6 +2767,7 @@
             };
             
             market.comments.unshift(comment);
+            saveToLocalStorage();
             renderComments(market.comments);
             
             commentInput.value = '';
