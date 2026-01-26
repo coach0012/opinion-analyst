@@ -250,8 +250,8 @@
 
         .markets-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
             animation: fadeInUp 0.6s ease-out;
         }
 
@@ -269,7 +269,7 @@
         .market-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -300,19 +300,19 @@
 
         .drag-handle {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 8px;
+            left: 8px;
             background: var(--bg-hover);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--text-secondary);
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             display: none;
             align-items: center;
             justify-content: center;
             cursor: move;
-            font-size: 1.2rem;
+            font-size: 1rem;
             z-index: 10;
             transition: all 0.3s ease;
             touch-action: none;
@@ -330,19 +330,19 @@
 
         .delete-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             background: #ff4444;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             color: white;
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
             z-index: 10;
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(255, 68, 68, 0.3);
@@ -359,19 +359,19 @@
 
         .edit-btn {
             position: absolute;
-            top: 10px;
-            right: 55px;
+            top: 8px;
+            right: 42px;
             background: #0088ff;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             color: white;
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
             z-index: 10;
             transition: all 0.3s ease;
             box-shadow: 0 2px 10px rgba(0, 136, 255, 0.3);
@@ -546,19 +546,23 @@
 
         .market-image {
             width: 100%;
-            height: 200px;
+            height: 150px;
             object-fit: cover;
             background: var(--bg-hover);
         }
 
         .market-content {
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .market-title {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* Modal */
@@ -1083,6 +1087,30 @@
             line-height: 1.8;
             color: var(--text-secondary);
             max-width: 900px;
+            overflow: hidden;
+            position: relative;
+            height: 2em;
+            line-height: 2em;
+        }
+
+        .about-text-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-text 25s linear infinite;
+            padding-right: 100%;
+        }
+
+        @keyframes scroll-text {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .about-text:hover .about-text-content {
+            animation-play-state: paused;
         }
 
         .disclaimer {
@@ -1214,6 +1242,38 @@
             font-size: 0.9rem;
         }
 
+        .footer-disclaimer {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--bg-hover);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 2.5em;
+        }
+
+        .footer-disclaimer-content {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-disclaimer 30s linear infinite;
+            padding-right: 100%;
+            font-size: 0.85rem;
+            line-height: 2.5em;
+        }
+
+        @keyframes scroll-disclaimer {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .footer-disclaimer:hover .footer-disclaimer-content {
+            animation-play-state: paused;
+        }
+
         .footer-logo {
             font-family: 'JetBrains Mono', monospace;
             font-size: 1.3rem;
@@ -1299,7 +1359,7 @@
             }
 
             .market-image {
-                height: 180px;
+                height: 150px;
             }
 
             .market-content {
@@ -1307,7 +1367,7 @@
             }
 
             .market-title {
-                font-size: 1rem;
+                font-size: 0.9rem;
             }
 
             .delete-btn {
@@ -1561,6 +1621,11 @@
 
             .about-text {
                 font-size: 1rem;
+                height: 2em;
+            }
+
+            .about-text-content {
+                font-size: 1rem;
             }
 
             .disclaimer {
@@ -1812,10 +1877,9 @@
         <section class="about-section">
             <div class="about-content">
                 <h2 class="about-title">About Opinion Analyst</h2>
-                <p class="about-text">
-                    Opinion Analyst is a community-built analytics platform developed within the Opinion Lab ecosystem. It provides market insights and analysis across the platform but does not offer financial advice. Users are responsible for conducting their own research before making any trading or investment decisions.
-                </p>
-               
+                <div class="about-text">
+                    <span class="about-text-content">Opinion Analyst is a community-built analytics platform developed within the Opinion Lab ecosystem. It provides market insights and analysis across the platform but does not offer financial advice. Users are responsible for conducting their own research before making any trading or investment decisions.</span>
+                </div>
             </div>
         </section>
 
@@ -1862,8 +1926,7 @@
                             <span class="footer-link-icon">𝕏</span>
                             <span>Opinion Analyst</span>
                         </a>
-                    
-                        <a href="https://x.com/coach00696" target="_blank" rel="noopener noreferrer" class="footer-link">
+                         <a href="https://x.com/coach00696" target="_blank" rel="noopener noreferrer" class="footer-link">
                             <span class="footer-link-icon">👤</span>
                             <span>Platform Founder</span>
                         </a>
@@ -1877,7 +1940,8 @@
                         <a href="https://x.com/opinionlabsxyz" target="_blank" rel="noopener noreferrer" class="footer-link">
                             <span class="footer-link-icon">𝕏</span>
                             <span>Follow Opinion Lab</span>
-                      
+                        </a>
+                       
                     </div>
                 </div>
 
@@ -1895,6 +1959,12 @@
                 <p style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.7;">
                     Not financial advice. Do your own research.
                 </p>
+                
+                <div class="footer-disclaimer">
+                    <div class="footer-disclaimer-content">
+                        ⚠️ DISCLAIMER: This platform provides educational content and market analysis for informational purposes only. All content should be considered as opinion and not financial advice. Always conduct your own due diligence and consult with qualified financial advisors before making investment decisions. Opinion Analyst is a community-built analytics platform within the Opinion Lab ecosystem.
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
