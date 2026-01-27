@@ -2,257 +2,225 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Opinion Analyst - Prediction Market Intelligence</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="shortcut icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="favicon.png">
-    
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opinion Analyst - Market Analysis Platform</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
-        }
-
-        html {
-            scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape */
-        }
-
-        :root {
-            --bg-dark: #0a0e17;
-            --bg-card: #141822;
-            --bg-hover: #1a1f2e;
-            --accent-primary: #00ff88;
-            --accent-secondary: #0088ff;
-            --text-primary: #ffffff;
-            --text-secondary: #94a3b8;
-            --border-color: #1e293b;
-            --shadow-glow: 0 0 40px rgba(0, 255, 136, 0.15);
-            --gradient-primary: linear-gradient(135deg, #00ff88 0%, #0088ff 100%);
         }
 
         body {
-            font-family: 'Manrope', sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+            color: #333;
             line-height: 1.6;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Animated Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(0, 136, 255, 0.03) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Header */
+        /* Header Styles */
         header {
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(10, 14, 23, 0.8);
-            backdrop-filter: blur(20px);
-            position: sticky;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
             top: 0;
-            z-index: 100;
-            animation: slideDown 0.6s ease-out;
+            z-index: 1000;
         }
 
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .header-content {
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
         }
 
         .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
-            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .header-actions {
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #ff8c00;
+            border-radius: 50%;
             display: flex;
-            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo-text span {
+            color: #ff8c00;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
             align-items: center;
         }
 
-        /* Search Bar */
-        .search-container {
-            position: relative;
-            flex: 1;
-            max-width: 500px;
+        nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
         }
 
-        .search-input {
-            width: 100%;
-            padding: 0.9rem 1.2rem 0.9rem 3rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-family: 'Manrope', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 0.9rem 1.8rem;
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            font-family: 'Manrope', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            touch-action: manipulation; /* Prevent double-tap zoom */
-            user-select: none;
+        nav a:hover {
+            color: #ff8c00;
         }
 
         .btn-primary {
-            background: var(--gradient-primary);
-            color: var(--bg-dark);
-            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
-        }
-
-        .btn-primary:hover,
-        .btn-primary:active {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(0, 255, 136, 0.4);
-        }
-
-        .btn-secondary {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-secondary:hover,
-        .btn-secondary:active {
-            background: var(--bg-hover);
-            border-color: var(--accent-primary);
-        }
-
-        /* Categories */
-        .categories {
-            padding: 2rem 0;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-
-        .categories::-webkit-scrollbar {
-            display: none;
-        }
-
-        .category-list {
-            display: flex;
-            gap: 1rem;
-            min-width: min-content;
-        }
-
-        .category-btn {
-            padding: 0.8rem 1.8rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            background: #ff8c00;
+            color: white;
+            padding: 0.75rem 1.5rem;
             border-radius: 50px;
-            color: var(--text-secondary);
+            text-decoration: none;
             font-weight: 600;
+            transition: all 0.3s;
+            border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            font-family: 'Manrope', sans-serif;
-            touch-action: manipulation;
-            user-select: none;
         }
 
-        .category-btn.active,
-        .category-btn:hover,
-        .category-btn:active {
-            background: var(--accent-primary);
-            color: var(--bg-dark);
-            border-color: var(--accent-primary);
+        .btn-primary:hover {
+            background: #ff7200;
             transform: scale(1.05);
         }
 
-        /* Markets Grid */
-        .markets-section {
-            padding: 2rem 0 4rem;
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
         }
 
-        .section-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            letter-spacing: -0.02em;
+        .mobile-nav {
+            display: none;
+            background: white;
+            border-top: 1px solid #eee;
+            padding: 1rem 2rem;
         }
 
-        .markets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        .mobile-nav.active {
+            display: flex;
+            flex-direction: column;
             gap: 1rem;
-            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 400px;
+            margin-top: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff8c00 0%, #ff5500 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-family: cursive;
+            margin-bottom: 0.5rem;
+            animation: fadeInUp 1s;
+        }
+
+        .hero-content h2 {
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-nav:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .slider-nav.prev {
+            left: 2rem;
+        }
+
+        .slider-nav.next {
+            right: 2rem;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .dot.active {
+            background: white;
         }
 
         @keyframes fadeInUp {
@@ -266,2703 +234,541 @@
             }
         }
 
-        .market-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            touch-action: manipulation;
+        /* Section Styles */
+        section {
+            padding: 3rem 2rem;
         }
 
-        .market-card.dragging {
-            opacity: 0.5;
-            transform: scale(0.95);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .market-card.drag-over {
-            border: 2px dashed var(--accent-primary);
-            background: var(--bg-hover);
-        }
-
-        .market-card:hover,
-        .market-card:active {
-            transform: translateY(-4px);
-            border-color: var(--accent-primary);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .market-card.dragging:hover {
-            transform: scale(0.95);
-        }
-
-        .drag-handle {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: var(--bg-hover);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-secondary);
-            width: 30px;
-            height: 30px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: move;
-            font-size: 1rem;
-            z-index: 10;
-            transition: all 0.3s ease;
-            touch-action: none;
-        }
-
-        .market-card .drag-handle {
-            display: flex;
-        }
-
-        .drag-handle:hover {
-            background: var(--accent-primary);
-            color: var(--bg-dark);
-            border-color: var(--accent-primary);
-        }
-
-        .delete-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: #ff4444;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1rem;
-            z-index: 10;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(255, 68, 68, 0.3);
-            touch-action: manipulation;
-            user-select: none;
-        }
-
-        .delete-btn:hover,
-        .delete-btn:active {
-            background: #cc0000;
-            transform: scale(1.1);
-            box-shadow: 0 4px 20px rgba(255, 68, 68, 0.5);
-        }
-
-        .edit-btn {
-            position: absolute;
-            top: 8px;
-            right: 42px;
-            background: #0088ff;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 0.9rem;
-            z-index: 10;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 136, 255, 0.3);
-            touch-action: manipulation;
-            user-select: none;
-        }
-
-        .edit-btn:hover,
-        .edit-btn:active {
-            background: #0066cc;
-            transform: scale(1.1);
-            box-shadow: 0 4px 20px rgba(0, 136, 255, 0.5);
-        }
-
-        /* Super Admin Panel */
-        .super-admin-section {
-            background: var(--bg-card);
-            border: 2px solid var(--accent-primary);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-            display: none;
-        }
-
-        .super-admin-section.active {
-            display: block;
-            animation: fadeInUp 0.4s ease-out;
-        }
-
-        .super-admin-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .admin-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .admin-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: var(--bg-hover);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-        }
-
-        .admin-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-
-        .admin-username {
-            font-weight: 700;
-            color: var(--accent-primary);
-        }
-
-        .admin-role {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .admin-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .btn-revoke {
-            padding: 0.5rem 1rem;
-            background: #ff4444;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            touch-action: manipulation;
-        }
-
-        .btn-revoke:hover,
-        .btn-revoke:active {
-            background: #cc0000;
-        }
-
-        .access-code-display {
-            background: var(--bg-dark);
-            border: 1px solid var(--accent-primary);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-top: 1rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
-        }
-
-        .access-code-display .code {
-            color: var(--accent-primary);
-            font-weight: 700;
-            user-select: all;
-        }
-
-        .copy-btn {
-            margin-left: 1rem;
-            padding: 0.4rem 0.8rem;
-            background: var(--bg-hover);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.2s ease;
-            touch-action: manipulation;
-        }
-
-        .copy-btn:hover,
-        .copy-btn:active {
-            background: var(--accent-primary);
-            color: var(--bg-dark);
-        }
-
-        .sort-controls {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-        }
-
-        .sort-label {
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .sort-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .sort-btn {
-            padding: 0.6rem 1.2rem;
-            background: var(--bg-hover);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Manrope', sans-serif;
-            touch-action: manipulation;
-            user-select: none;
-        }
-
-        .sort-btn:hover,
-        .sort-btn:active,
-        .sort-btn.active {
-            background: var(--accent-primary);
-            color: var(--bg-dark);
-            border-color: var(--accent-primary);
-        }
-
-        .market-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            background: var(--bg-hover);
-        }
-
-        .market-content {
-            padding: 1rem;
-        }
-
-        .market-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            overflow-y: auto;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .modal-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            max-width: 900px;
-            width: 100%;
-            margin: auto;
-            animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            padding: 2rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .modal-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            flex: 1;
-            line-height: 1.3;
-        }
-
-        .modal-header-actions {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .modal-edit-btn {
-            background: #0088ff;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            touch-action: manipulation;
-            user-select: none;
-        }
-
-        .modal-edit-btn:hover,
-        .modal-edit-btn:active {
-            background: #0066cc;
-            transform: scale(1.05);
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 2rem;
-            cursor: pointer;
-            line-height: 1;
-            padding: 0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .close-btn:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-        }
-
-        .modal-body {
-            padding: 2rem;
-        }
-
-        .analysis-section {
-            margin-bottom: 2rem;
-        }
-
-        .analysis-image {
-            width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-        }
-
-        .analysis-text {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-
-        .interaction-bar {
-            display: flex;
-            gap: 1rem;
-            padding: 1.5rem 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-        }
-
-        .like-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background: var(--bg-hover);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            touch-action: manipulation;
-            user-select: none;
-        }
-
-        .like-btn:hover,
-        .like-btn:active,
-        .like-btn.liked {
-            background: var(--accent-primary);
-            color: var(--bg-dark);
-            border-color: var(--accent-primary);
-        }
-
-        .trade-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            background: var(--gradient-primary);
-            border: none;
-            border-radius: 10px;
-            color: var(--bg-dark);
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            touch-action: manipulation;
-            user-select: none;
-        }
-
-        .trade-btn:hover,
-        .trade-btn:active {
-            transform: scale(1.02);
-            box-shadow: 0 6px 30px rgba(0, 255, 136, 0.4);
-        }
-
-        /* Comments */
-        .comments-section {
-            margin-top: 2rem;
-        }
-
-        .comments-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .comment-form {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .comment-input {
-            flex: 1;
-            padding: 1rem;
-            background: var(--bg-hover);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-family: 'Manrope', sans-serif;
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .comment-input:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-        }
-
-        .comment-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .comment {
-            padding: 1.2rem;
-            background: var(--bg-hover);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            animation: fadeInUp 0.3s ease-out;
-        }
-
-        .comment-author {
-            font-weight: 700;
-            color: var(--accent-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .comment-text {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        .comment-time {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-            opacity: 0.7;
-        }
-
-        /* Admin Panel */
-        .admin-panel {
-            display: none;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .admin-panel.active {
-            display: block;
-            animation: fadeInUp 0.4s ease-out;
-        }
-
-        .admin-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .form-label::after {
-            content: '';
-        }
-
-        .form-input:required,
-        .form-select:required,
-        .form-textarea:required {
-            border-left: 3px solid var(--accent-primary);
-        }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-            width: 100%;
-            padding: 1rem;
-            background: var(--bg-hover);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 0.95rem;
-            font-family: 'Manrope', sans-serif;
-        }
-
-        .form-textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-        }
-
-        /* Rich Text Editor Toolbar */
-        .editor-toolbar {
-            display: flex;
-            gap: 0.5rem;
-            padding: 0.8rem;
-            background: var(--bg-hover);
-            border: 1px solid var(--border-color);
-            border-bottom: none;
-            border-radius: 10px 10px 0 0;
-            flex-wrap: wrap;
-        }
-
-        .editor-btn {
-            padding: 0.5rem 0.8rem;
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 600;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-            touch-action: manipulation;
-            user-select: none;
-        }
-
-        .editor-btn:hover,
-        .editor-btn:active,
-        .editor-btn.active {
-            background: var(--accent-primary);
-            color: var(--bg-dark);
-            border-color: var(--accent-primary);
-        }
-
-        .editor-separator {
-            width: 1px;
-            background: var(--border-color);
-            margin: 0 0.3rem;
-        }
-
-        .color-picker-btn {
-            padding: 0.5rem;
-            width: 35px;
-            height: 35px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 2px solid var(--border-color);
-            transition: all 0.2s ease;
-            touch-action: manipulation;
-            user-select: none;
-        }
-
-        .color-picker-btn:hover,
-        .color-picker-btn:active {
-            transform: scale(1.1);
-            border-color: var(--accent-primary);
-        }
-
-        .editor-textarea {
-            border-radius: 0 0 10px 10px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .analysis-preview {
-            padding: 1rem;
-            background: var(--bg-dark);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            margin-top: 1rem;
-            min-height: 100px;
-            line-height: 1.8;
-        }
-
-        .file-upload {
-            border: 2px dashed var(--border-color);
-            border-radius: 10px;
-            padding: 2rem;
+        .section-title {
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #333;
         }
 
-        .file-upload:hover {
-            border-color: var(--accent-primary);
-            background: var(--bg-hover);
+        .section-title span {
+            color: #ff8c00;
         }
 
-        .file-upload input {
-            display: none;
-        }
-
-        .preview-image {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 12px;
-            margin-top: 1rem;
-        }
-
-        /* Loading Spinner */
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--bg-hover);
-            border-top-color: var(--accent-primary);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 2rem auto;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Toast Notification */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--accent-primary);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
-            animation: slideInRight 0.3s ease-out;
-            z-index: 2000;
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
         }
 
         /* About Section */
-        .about-section {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 136, 255, 0.05) 100%);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 4rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .about-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .about-title {
-            font-size: 2rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            max-width: 900px;
-            overflow: hidden;
-            position: relative;
-            height: 2em;
-            line-height: 2em;
-        }
-
-        .about-text-content {
-            display: inline-block;
-            white-space: nowrap;
-            animation: scroll-text 25s linear infinite;
-            padding-right: 100%;
-        }
-
-        @keyframes scroll-text {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-
-        .about-text:hover .about-text-content {
-            animation-play-state: paused;
+        .about {
+            background: white;
         }
 
         .disclaimer {
-            margin-top: 1.5rem;
+            background: #fff4e6;
+            border-left: 4px solid #ff8c00;
             padding: 1.5rem;
-            background: var(--bg-card);
-            border-left: 4px solid var(--accent-primary);
-            border-radius: 10px;
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
+            border-radius: 8px;
+            max-width: 900px;
+            margin: 2rem auto;
         }
 
-        .disclaimer strong {
-            color: var(--accent-primary);
-            display: block;
+        .disclaimer p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* Features Section */
+        .features {
+            background: #f9fafb;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #ff8c00;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #fff4e6;
+            color: #ff8c00;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: white;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: #ff8c00;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
             margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .step p {
+            color: #666;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #ff8c00 0%, #ff5500 100%);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 2rem;
+        }
+
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cta p {
             font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #ff8c00;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        .btn-tertiary {
+            background: #ff7200;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-tertiary:hover {
+            background: #ff6200;
+            transform: scale(1.05);
         }
 
         /* Footer */
         footer {
-            background: var(--bg-card);
-            border-top: 1px solid var(--border-color);
-            padding: 4rem 0 2rem;
-            margin-top: 4rem;
-            position: relative;
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem;
         }
 
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--gradient-primary);
-            opacity: 0.5;
-        }
-
-        .footer-content {
+        .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
-        .footer-section {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
         }
 
-        .footer-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--accent-primary);
+        .footer-section p,
+        .footer-section a {
+            color: #999;
+            text-decoration: none;
+            display: block;
             margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
+        .footer-section a:hover {
+            color: #ff8c00;
         }
 
-        .footer-link {
+        .social-link {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-            padding: 0.5rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
-        }
-
-        .footer-link:hover {
-            color: var(--accent-primary);
-            background: var(--bg-hover);
-            transform: translateX(5px);
-        }
-
-        .footer-link-icon {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--bg-hover);
-            border-radius: 6px;
-            font-size: 0.9rem;
-        }
-
-        .footer-link:hover .footer-link-icon {
-            background: var(--accent-primary);
-        }
-
-        .trade-cta {
-            background: var(--gradient-primary);
-            color: var(--bg-dark);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             gap: 0.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .trade-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(0, 255, 136, 0.4);
+            margin-bottom: 0.75rem;
         }
 
         .footer-bottom {
-            text-align: center;
+            border-top: 1px solid #333;
             padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .footer-disclaimer {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: var(--bg-hover);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            height: 2.5em;
-        }
-
-        .footer-disclaimer-content {
-            display: inline-block;
-            white-space: nowrap;
-            animation: scroll-disclaimer 30s linear infinite;
-            padding-right: 100%;
-            font-size: 0.85rem;
-            line-height: 2.5em;
-        }
-
-        @keyframes scroll-disclaimer {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-
-        .footer-disclaimer:hover .footer-disclaimer-content {
-            animation-play-state: paused;
-        }
-
-        .footer-logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.3rem;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-
-        .footer-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            max-width: 300px;
+            text-align: center;
+            color: #666;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 1rem;
+            nav.desktop-nav {
+                display: none;
             }
 
-            header {
-                padding: 1rem 0;
-            }
-
-            .logo {
-                font-size: 1.2rem;
-            }
-
-            .markets-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .header-content {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1rem;
-            }
-
-            .header-actions {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .btn {
-                padding: 0.75rem 1.2rem;
-                font-size: 0.85rem;
-            }
-
-            .search-container {
-                max-width: 100%;
-                order: -1;
-            }
-
-            .search-input {
-                font-size: 16px; /* Prevents zoom on iOS */
-            }
-
-            /* Categories scroll on mobile */
-            .categories {
-                padding: 1rem 0;
-            }
-
-            .category-btn {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.85rem;
-            }
-
-            /* Section title */
-            .section-title {
-                font-size: 1.5rem;
-                margin-bottom: 1rem;
-            }
-
-            /* Market cards */
-            .market-card {
-                border-radius: 12px;
-            }
-
-            .market-image {
-                height: 150px;
-            }
-
-            .market-content {
-                padding: 1rem;
-            }
-
-            .market-title {
-                font-size: 0.9rem;
-            }
-
-            .delete-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 1rem;
-                top: 8px;
-                right: 8px;
-            }
-
-            .edit-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 0.9rem;
-                top: 8px;
-                right: 45px;
-            }
-
-            .drag-handle {
-                width: 32px;
-                height: 32px;
-                font-size: 1rem;
-                top: 8px;
-                left: 8px;
-            }
-
-            /* Modal responsive */
-            .modal {
-                padding: 0;
-            }
-
-            .modal.active {
-                padding: 1rem;
-                align-items: flex-start;
-            }
-
-            .modal-content {
-                margin: 0;
-                max-width: 100%;
-                border-radius: 16px;
-            }
-
-            .modal-header {
-                padding: 1.5rem;
-            }
-
-            .modal-title {
-                font-size: 1.3rem;
-            }
-
-            .modal-header-actions {
-                flex-shrink: 0;
-            }
-
-            .modal-edit-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
-            }
-
-            .modal-body {
-                padding: 1.5rem;
-            }
-
-            .analysis-text {
-                font-size: 0.95rem;
-                line-height: 1.7;
-            }
-
-            .analysis-image {
-                max-height: 250px;
-                border-radius: 8px;
-            }
-
-            .interaction-bar {
-                flex-direction: column;
-                gap: 0.8rem;
-                padding: 1rem 0;
-            }
-
-            .like-btn {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .trade-btn {
-                width: 100%;
-            }
-
-            /* Comments */
-            .comments-title {
-                font-size: 1.1rem;
-            }
-
-            .comment-form {
-                flex-direction: column;
-            }
-
-            .comment-input {
-                min-height: 100px;
-                font-size: 16px; /* Prevents zoom on iOS */
-            }
-
-            .comment {
-                padding: 1rem;
-            }
-
-            /* Admin Panel */
-            .admin-panel {
-                padding: 1.5rem;
-                border-radius: 16px;
-                margin: 1rem 0;
-            }
-
-            .admin-title {
-                font-size: 1.5rem;
-            }
-
-            .form-input,
-            .form-select,
-            .form-textarea {
-                font-size: 16px; /* Prevents zoom on iOS */
-                padding: 0.8rem;
-            }
-
-            .form-textarea {
-                min-height: 120px;
-            }
-
-            /* Editor Toolbar - make scrollable on mobile */
-            .editor-toolbar {
-                overflow-x: auto;
-                padding: 0.6rem;
-                gap: 0.4rem;
-                flex-wrap: nowrap;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .editor-toolbar::-webkit-scrollbar {
-                height: 4px;
-            }
-
-            .editor-toolbar::-webkit-scrollbar-track {
-                background: var(--bg-dark);
-            }
-
-            .editor-toolbar::-webkit-scrollbar-thumb {
-                background: var(--border-color);
-                border-radius: 2px;
-            }
-
-            .editor-btn {
-                padding: 0.5rem 0.7rem;
-                font-size: 0.8rem;
-                white-space: nowrap;
-            }
-
-            .color-picker-btn {
-                width: 30px;
-                height: 30px;
-                flex-shrink: 0;
-            }
-
-            .file-upload {
-                padding: 1.5rem;
-                font-size: 0.9rem;
-            }
-
-            .preview-image {
-                max-height: 200px;
-            }
-
-            /* Super Admin Panel Mobile */
-            .super-admin-section {
-                padding: 1.5rem;
-                margin: 1rem 0;
-            }
-
-            .super-admin-title {
-                font-size: 1.5rem;
-            }
-
-            .admin-item {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: stretch;
-            }
-
-            .admin-actions {
-                width: 100%;
-            }
-
-            .btn-revoke {
-                width: 100%;
-            }
-
-            .access-code-display {
-                font-size: 0.85rem;
-                padding: 0.8rem;
-            }
-
-            .copy-btn {
+            .mobile-menu-btn {
                 display: block;
-                width: 100%;
-                margin: 0.5rem 0 0 0;
             }
 
-            /* Sort Controls */
-            .sort-controls {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 0.8rem;
+            .hero-content h1 {
+                font-size: 2.5rem;
             }
 
-            .sort-buttons {
-                overflow-x: auto;
-                flex-wrap: nowrap;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .sort-btn {
-                padding: 0.5rem 1rem;
-                font-size: 0.8rem;
-                white-space: nowrap;
-            }
-
-            /* Toast notification */
-            .toast {
-                bottom: 1rem;
-                right: 1rem;
-                left: 1rem;
-                font-size: 0.9rem;
-            }
-
-            /* Close button */
-            .close-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 1.5rem;
-            }
-
-            /* About Section Mobile */
-            .about-section {
-                padding: 2rem 1.5rem;
-                margin: 2rem 0;
-            }
-
-            .about-title {
-                font-size: 1.5rem;
-            }
-
-            .about-text {
-                font-size: 1rem;
-                height: 2em;
-            }
-
-            .about-text-content {
+            .hero-content h2 {
                 font-size: 1rem;
             }
 
-            .disclaimer {
-                padding: 1rem;
+            .hero-content p {
                 font-size: 0.9rem;
-            }
-
-            /* Footer Mobile */
-            footer {
-                padding: 3rem 0 1.5rem;
-                margin-top: 3rem;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-title {
-                font-size: 1.1rem;
-            }
-
-            .footer-link {
-                font-size: 0.9rem;
-            }
-
-            .trade-cta {
-                padding: 0.9rem 1.2rem;
-                font-size: 0.9rem;
-            }
-
-            .footer-logo {
-                font-size: 1.1rem;
-            }
-
-            .footer-description {
-                max-width: 100%;
-            }
-        }
-
-        /* Extra small devices */
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1rem;
-            }
-
-            .btn {
-                padding: 0.65rem 1rem;
-                font-size: 0.8rem;
             }
 
             .section-title {
-                font-size: 1.3rem;
+                font-size: 2rem;
             }
 
-            .market-title {
-                font-size: 0.95rem;
+            .slider-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
             }
 
-            .modal-title {
-                font-size: 1.1rem;
+            .slider-nav.prev {
+                left: 1rem;
             }
 
-            .analysis-text {
-                font-size: 0.9rem;
-            }
-
-            .comment-text {
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Landscape mode on mobile */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .modal-content {
-                margin: 0.5rem auto;
-            }
-
-            .market-image {
-                height: 150px;
-            }
-        }
-
-        /* Ensure touch targets are at least 44x44px */
-        @media (max-width: 768px) {
-            .category-btn,
-            .vote-btn,
-            .editor-btn,
-            .sort-btn {
-                min-height: 44px;
-                min-width: 44px;
+            .slider-nav.next {
+                right: 1rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo" onclick="goToDashboard()" style="cursor: pointer;" title="Go to Dashboard">Opinion Analyst</div>
-                <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search markets...">
-                </div>
-                <div class="header-actions">
-                    <button class="btn btn-secondary" id="adminToggle">Admin</button>
-                    <button class="btn btn-primary" id="manageAdminsBtn" style="display: none;">Manage Admins</button>
-                    <button class="btn btn-primary" id="addMarketBtn" style="display: none;">+ Add Market</button>
-                </div>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">📊</div>
+                <div class="logo-text">Opinion<span>Analyst</span></div>
             </div>
+            
+            <nav class="desktop-nav">
+                <a href="#home">HOME</a>
+                <a href="#dashboard">DASHBOARD</a>
+                <a href="#opinion-cards">OPINION CARDS</a>
+                <a href="#market-analysis">MARKET ANALYSIS</a>
+                <a href="https://opinion.trade" target="_blank" class="btn-primary">TRADE NOW</a>
+            </nav>
+
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+        
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#home" onclick="toggleMobileMenu()">HOME</a>
+            <a href="#dashboard" onclick="toggleMobileMenu()">DASHBOARD</a>
+            <a href="#opinion-cards" onclick="toggleMobileMenu()">OPINION CARDS</a>
+            <a href="#market-analysis" onclick="toggleMobileMenu()">MARKET ANALYSIS</a>
+            <a href="https://opinion.trade" target="_blank" class="btn-primary">TRADE NOW</a>
         </div>
     </header>
 
-    <div class="container">
-        <!-- Super Admin Panel -->
-        <div class="super-admin-section" id="superAdminPanel">
-            <h2 class="super-admin-title">🔐 Super Admin Control Panel</h2>
-            
-            <div class="form-group">
-                <label class="form-label">Create New Admin</label>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <input type="text" class="form-input" id="newAdminUsername" placeholder="Username" style="flex: 1; min-width: 200px;">
-                    <button class="btn btn-primary" id="generateAdminBtn">Generate Access</button>
-                </div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-slide active">
+            <div class="hero-content">
+                <h1>Analyze</h1>
+                <h2>LIVE MARKET INSIGHTS</h2>
+                <p>Real-time opinion statistics and market data analysis</p>
+                <button class="btn-primary" onclick="scrollToSection('opinion-cards')">START TODAY</button>
             </div>
-
-            <div id="generatedAccessCode" style="display: none;" class="access-code-display">
-                <strong>Share these credentials:</strong><br>
-                Username: <span class="code" id="displayUsername"></span><br>
-                Password: <span class="code" id="displayPassword"></span>
-                <button class="copy-btn" onclick="copyCredentials()">📋 Copy</button>
+        </div>
+        <div class="hero-slide">
+            <div class="hero-content">
+                <h1>Decide</h1>
+                <h2>DATA-DRIVEN DECISIONS</h2>
+                <p>Comprehensive market analysis to guide your strategy</p>
+                <button class="btn-primary" onclick="scrollToSection('opinion-cards')">START TODAY</button>
             </div>
-
-            <div class="admin-list" id="adminList">
-                <!-- Admin list will be populated here -->
+        </div>
+        <div class="hero-slide">
+            <div class="hero-content">
+                <h1>Create</h1>
+                <h2>PROFESSIONAL TRADING CARDS</h2>
+                <p>Generate high-quality trading cards for Opinion Lab</p>
+                <button class="btn-primary" onclick="scrollToSection('opinion-cards')">START TODAY</button>
             </div>
         </div>
 
-        <!-- Admin Panel -->
-        <div class="admin-panel" id="adminPanel">
-            <h2 class="admin-title">Add New Market</h2>
-            <form id="marketForm">
-                <div class="form-group">
-                    <label class="form-label">Market Title *</label>
-                    <input type="text" class="form-input" id="marketTitle" required placeholder="e.g., US Fed Rate Decision in January?">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Category *</label>
-                    <select class="form-select" id="marketCategory" required>
-                        <option value="">Select a category</option>
-                        <option value="Macro">Macro</option>
-                        <option value="Pre-TGE">Pre-TGE</option>
-                        <option value="Crypto">Crypto</option>
-                        <option value="Business">Business</option>
-                        <option value="Politics">Politics</option>
-                        <option value="Sports">Sports</option>
-                        <option value="Tech">Tech</option>
-                        <option value="Culture">Culture</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Market Image *</label>
-                    <div class="file-upload" id="marketImageUpload">
-                        <input type="file" id="marketImageInput" accept="image/*" required>
-                        <p>📸 Click to upload market image (Required)</p>
-                    </div>
-                    <img id="marketImagePreview" class="preview-image" style="display: none;">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Analysis *</label>
-                    <div class="editor-toolbar">
-                        <button type="button" class="editor-btn" onclick="undoText()" title="Undo">
-                            ↶
-                        </button>
-                        <button type="button" class="editor-btn" onclick="redoText()" title="Redo">
-                            ↷
-                        </button>
-                        
-                        <div class="editor-separator"></div>
-                        
-                        <button type="button" class="editor-btn" onclick="formatText('bold')" title="Bold">
-                            <strong>B</strong>
-                        </button>
-                        <button type="button" class="editor-btn" onclick="formatText('italic')" title="Italic">
-                            <em>I</em>
-                        </button>
-                        <button type="button" class="editor-btn" onclick="formatText('underline')" title="Underline">
-                            <u>U</u>
-                        </button>
-                        
-                        <div class="editor-separator"></div>
-                        
-                        <button type="button" class="editor-btn" onclick="formatText('size', '2x')" title="2x Text">
-                            2x
-                        </button>
-                        <button type="button" class="editor-btn" onclick="formatText('size', '1.5x')" title="1.5x Text">
-                            1.5x
-                        </button>
-                        <button type="button" class="editor-btn" onclick="formatText('size', '1x')" title="1x Text">
-                            1x
-                        </button>
-                        <button type="button" class="editor-btn" onclick="formatText('size', 'A')" title="Small Text">
-                            A
-                        </button>
-                        <button type="button" class="editor-btn" onclick="formatText('size', 'A-')" title="Smaller Text">
-                            A-
-                        </button>
-                        
-                        <div class="editor-separator"></div>
-                        
-                        <button type="button" class="color-picker-btn" style="background: #00ff88;" onclick="formatText('color', '#00ff88')" title="Green"></button>
-                        <button type="button" class="color-picker-btn" style="background: #0088ff;" onclick="formatText('color', '#0088ff')" title="Blue"></button>
-                        <button type="button" class="color-picker-btn" style="background: #ff0088;" onclick="formatText('color', '#ff0088')" title="Pink"></button>
-                        <button type="button" class="color-picker-btn" style="background: #ffaa00;" onclick="formatText('color', '#ffaa00')" title="Orange"></button>
-                        <button type="button" class="color-picker-btn" style="background: #ffffff;" onclick="formatText('color', '#ffffff')" title="White"></button>
-                        <button type="button" class="color-picker-btn" style="background: #ff4444;" onclick="formatText('color', '#ff4444')" title="Red"></button>
-                    </div>
-                    <textarea class="form-textarea editor-textarea" id="analysisText" required placeholder="Write your detailed analysis here..."></textarea>
-                    <div class="analysis-preview" id="analysisPreview" style="display: none;"></div>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Analysis Image (Optional)</label>
-                    <div class="file-upload" id="analysisImageUpload">
-                        <input type="file" id="analysisImageInput" accept="image/*">
-                        <p>📊 Click to upload analysis image (Optional)</p>
-                    </div>
-                    <img id="analysisImagePreview" class="preview-image" style="display: none;">
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Market</button>
-            </form>
-        </div>
+        <button class="slider-nav prev" onclick="changeSlide(-1)">‹</button>
+        <button class="slider-nav next" onclick="changeSlide(1)">›</button>
 
-        <!-- Categories -->
-        <div class="categories">
-            <div class="category-list">
-                <button class="category-btn active" data-category="All">All</button>
-                <button class="category-btn" data-category="Macro">Macro</button>
-                <button class="category-btn" data-category="Pre-TGE">Pre-TGE</button>
-                <button class="category-btn" data-category="Crypto">Crypto</button>
-                <button class="category-btn" data-category="Business">Business</button>
-                <button class="category-btn" data-category="Politics">Politics</button>
-                <button class="category-btn" data-category="Sports">Sports</button>
-                <button class="category-btn" data-category="Tech">Tech</button>
-                <button class="category-btn" data-category="Culture">Culture</button>
+        <div class="slider-dots">
+            <span class="dot active" onclick="goToSlide(0)"></span>
+            <span class="dot" onclick="goToSlide(1)"></span>
+            <span class="dot" onclick="goToSlide(2)"></span>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="about" id="dashboard">
+        <div class="container">
+            <h2 class="section-title">About <span>Opinion Analyst</span></h2>
+            <p class="section-subtitle">
+                An analytical platform designed to analyze live market data on Opinion Lab,
+                providing traders with comprehensive insights and professional tools.
+            </p>
+            <div class="disclaimer">
+                <p>⚠️ <strong>Disclaimer:</strong> This platform is not for financial advice purposes. 
+                Please do your own research before making any trading decisions.</p>
             </div>
         </div>
+    </section>
 
-        <!-- About Section -->
-        <section class="about-section">
-            <div class="about-content">
-                <h2 class="about-title">About Opinion Analyst</h2>
-                <div class="about-text">
-                    <span class="about-text-content">Opinion Analyst is a community-built analytics platform developed within the Opinion Lab ecosystem. It provides market insights and analysis across the platform but does not offer financial advice. Users are responsible for conducting their own research before making any trading or investment decisions.</span>
+    <!-- Opinion Cards Section -->
+    <section class="features" id="opinion-cards">
+        <div class="container">
+            <h2 class="section-title">Our <span>Features</span></h2>
+            <p class="section-subtitle">Powerful tools to enhance your Opinion Lab trading experience</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Dashboard</h3>
+                    <p>Track opinion statistics and market trends in real-time with our comprehensive analytics dashboard.</p>
+                    <span class="status-badge">Coming Soon</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Market Analysis</h3>
+                    <p>Access detailed market data and insights to help inform your trading decisions on Opinion Lab.</p>
+                    <span class="status-badge">Coming Soon</span>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <h3>Generate Cards</h3>
+                    <p>Create professionally designed trading cards for Opinion Lab traders with custom analytics.</p>
+                    <span class="status-badge">Coming Soon</span>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Markets Section -->
-        <section class="markets-section">
-            <h2 class="section-title">Live Markets</h2>
+    <!-- Market Analysis Section -->
+    <section class="how-it-works" id="market-analysis">
+        <div class="container">
+            <h2 class="section-title">How It <span>Works</span></h2>
             
-            <!-- Admin Sorting Controls -->
-            <div class="sort-controls" id="sortControls" style="display: none;">
-                <span class="sort-label">Sort Markets:</span>
-                <div class="sort-buttons">
-                    <button class="sort-btn" data-sort="manual">Manual Order (Drag & Drop)</button>
-                    <button class="sort-btn active" data-sort="newest">Newest First</button>
-                    <button class="sort-btn" data-sort="oldest">Oldest First</button>
-                    <button class="sort-btn" data-sort="title">By Title (A-Z)</button>
-                    <button class="sort-btn" data-sort="category">By Category</button>
-                    <button class="sort-btn" data-sort="likes">Most Liked</button>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Dashboard Overview</h3>
+                    <p>View real-time opinion statistics and market trends at a glance</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Market Analysis</h3>
+                    <p>Access detailed data and insights to inform your trading decisions</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Generate Cards</h3>
+                    <p>Create professional trading cards with custom analytics and designs</p>
                 </div>
             </div>
-            
-            <div class="markets-grid" id="marketsGrid">
-                <!-- Markets will be dynamically loaded here -->
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" style="padding: 2.5rem 2rem;">
+        <div class="container">
+            <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Ready to Get Started?</h2>
+            <p style="font-size: 1rem; margin-bottom: 1.5rem;">Join Opinion Lab and start trading today with our analytical insights</p>
+            <div class="cta-buttons">
+                <a href="https://opinion.trade" target="_blank" class="btn-secondary">Trade Now</a>
+                <a href="https://x.com/opinionlabsxyz" target="_blank" class="btn-tertiary">Learn More</a>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-content">
-                <!-- About -->
+            <div class="footer-grid">
                 <div class="footer-section">
-                    <div class="footer-logo">Opinion Analyst</div>
-                    <p class="footer-description">
-                        Community-built analytics platform within the Opinion Lab ecosystem, providing market insights and analysis.
-                    </p>
-                </div>
-
-                <!-- Follow Us -->
-                <div class="footer-section">
-                    <h3 class="footer-title">Follow Us</h3>
-                    <div class="footer-links">
-                        <a href="https://x.com/OAnalyst42184" target="_blank" rel="noopener noreferrer" class="footer-link">
-                            <span class="footer-link-icon">𝕏</span>
-                            <span>Opinion Analyst</span>
-                        </a>
-                         <a href="https://x.com/coach00696" target="_blank" rel="noopener noreferrer" class="footer-link">
-                            <span class="footer-link-icon">👤</span>
-                            <span>Platform Founder</span>
-                        </a>
+                    <div class="logo">
+                        <div class="logo-icon">📊</div>
+                        <div class="logo-text">Opinion<span>Analyst</span></div>
                     </div>
+                    <p style="margin-top: 1rem;">Analytical platform for Opinion Lab traders</p>
                 </div>
 
-                <!-- Opinion Lab -->
                 <div class="footer-section">
-                    <h3 class="footer-title">Opinion Lab</h3>
-                    <div class="footer-links">
-                        <a href="https://x.com/opinionlabsxyz" target="_blank" rel="noopener noreferrer" class="footer-link">
-                            <span class="footer-link-icon">𝕏</span>
-                            <span>Follow Opinion Lab</span>
-                        </a>
-                       
+                    <h3>Quick Links</h3>
+                    <a href="https://opinion.trade" target="_blank">Trade Now</a>
+                    <a href="https://x.com/opinionlabsxyz" target="_blank">Opinion Lab</a>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Follow Our Social Platforms</h3>
+                    <div class="social-link">
+                        <span>🐦</span>
+                        <a href="https://x.com/coach00696" target="_blank">Builder: @coach00696</a>
                     </div>
-                </div>
-
-                <!-- Trade -->
-                <div class="footer-section">
-                    <h3 class="footer-title">Start Trading</h3>
-                    <a href="https://opinion.trade" target="_blank" rel="noopener noreferrer" class="trade-cta">
-                        Trade on Opinion Lab →
-                    </a>
+                    <div class="social-link">
+                        <span>🐦</span>
+                        <a href="https://x.com/OAnalyst42184" target="_blank">Platform: @OAnalyst42184</a>
+                    </div>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2026 Opinion Analyst. Part of the Opinion Lab ecosystem. All rights reserved.</p>
-                <p style="margin-top: 0.5rem; font-size: 0.85rem; opacity: 0.7;">
-                    Not financial advice. Do your own research.
-                </p>
-                
-                <div class="footer-disclaimer">
-                    <div class="footer-disclaimer-content">
-                        ⚠️ DISCLAIMER: This platform provides educational content and market analysis for informational purposes only. All content should be considered as opinion and not financial advice. Always conduct your own due diligence and consult with qualified financial advisors before making investment decisions. Opinion Analyst is a community-built analytics platform within the Opinion Lab ecosystem.
-                    </div>
-                </div>
+                <p>&copy; 2025 Opinion Analyst. All rights reserved.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">Not for financial advice purposes. Do your own research.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Market Detail Modal -->
-    <div class="modal" id="marketModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle"></h3>
-                <div class="modal-header-actions">
-                    <button class="modal-edit-btn" id="modalEditBtn" style="display: none;">✏️</button>
-                    <button class="close-btn" id="closeModal">&times;</button>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="analysis-section">
-                    <img id="modalAnalysisImage" class="analysis-image" style="display: none;">
-                    <div class="analysis-text" id="modalAnalysisText"></div>
-                </div>
-                <div class="interaction-bar">
-                    <button class="like-btn" id="likeBtn">
-                        <span id="likeIcon">👍</span>
-                        <span id="likeCount">0</span>
-                    </button>
-                    <button class="trade-btn" id="tradeBtn">
-                        Trade Now →
-                    </button>
-                </div>
-                <div class="comments-section">
-                    <h4 class="comments-title">Comments</h4>
-                    <div class="comment-form">
-                        <textarea class="comment-input" id="commentInput" placeholder="Share your thoughts..."></textarea>
-                        <button class="btn btn-primary" id="postCommentBtn">Post</button>
-                    </div>
-                    <div class="comment-list" id="commentList">
-                        <!-- Comments will be loaded here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Data Storage
-        let markets = [];
-        let currentMarketId = null;
-        let isAdmin = false;
-        let isSuperAdmin = false;
-        let currentAdminUsername = null;
-        let userInterests = {}; // Track user interests for algorithm
-        let editingMarketId = null; // Track which market is being edited
-        let currentSortMode = 'newest'; // Track current sort mode
-        let manualOrder = []; // Store manual order
-        
-        // Undo/Redo History
-        let undoHistory = [];
-        let redoHistory = [];
-        let isUndoRedo = false; // Flag to prevent history recording during undo/redo
-        
-        // Admin credentials
-        const SUPER_ADMIN_USERNAME = 'coach';
-        const SUPER_ADMIN_PASSWORD = '1234';
-        
-        // Store additional admins
-        let adminUsers = [
-            { username: SUPER_ADMIN_USERNAME, password: SUPER_ADMIN_PASSWORD, role: 'super', active: true }
-        ];
+        // Slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.dot');
 
-        // LocalStorage Functions
-        function saveToLocalStorage() {
-            try {
-                localStorage.setItem('opinionAnalyst_markets', JSON.stringify(markets));
-                localStorage.setItem('opinionAnalyst_adminUsers', JSON.stringify(adminUsers));
-                localStorage.setItem('opinionAnalyst_manualOrder', JSON.stringify(manualOrder));
-                localStorage.setItem('opinionAnalyst_currentSortMode', currentSortMode);
-            } catch (error) {
-                console.error('Error saving to localStorage:', error);
-            }
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            currentSlide = (n + slides.length) % slides.length;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
         }
 
-        function loadFromLocalStorage() {
-            try {
-                const savedMarkets = localStorage.getItem('opinionAnalyst_markets');
-                const savedAdminUsers = localStorage.getItem('opinionAnalyst_adminUsers');
-                const savedManualOrder = localStorage.getItem('opinionAnalyst_manualOrder');
-                const savedSortMode = localStorage.getItem('opinionAnalyst_currentSortMode');
-
-                if (savedMarkets) {
-                    markets = JSON.parse(savedMarkets);
-                }
-
-                if (savedAdminUsers) {
-                    const parsed = JSON.parse(savedAdminUsers);
-                    // Make sure super admin is always present
-                    const hasSuperAdmin = parsed.some(a => a.username === SUPER_ADMIN_USERNAME);
-                    if (hasSuperAdmin) {
-                        adminUsers = parsed;
-                    }
-                }
-
-                if (savedManualOrder) {
-                    manualOrder = JSON.parse(savedManualOrder);
-                }
-
-                if (savedSortMode) {
-                    currentSortMode = savedSortMode;
-                }
-            } catch (error) {
-                console.error('Error loading from localStorage:', error);
-            }
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
         }
 
-        // Navigate to Dashboard
-        function goToDashboard() {
-            // Close any open modals
-            document.getElementById('marketModal').classList.remove('active');
-            document.getElementById('superAdminPanel').classList.remove('active');
+        function goToSlide(n) {
+            showSlide(n);
+        }
+
+        // Auto-advance slides every 5 seconds
+        setInterval(() => {
+            changeSlide(1);
+        }, 5000);
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('active');
+        }
+
+        // Smooth scroll to section
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const mobileNav = document.getElementById('mobileNav');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
             
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Reset category filter to "All"
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.category === 'All') {
-                    btn.classList.add('active');
+            if (mobileNav.classList.contains('active') && 
+                !mobileNav.contains(e.target) && 
+                !menuBtn.contains(e.target)) {
+                mobileNav.classList.remove('active');
+            }
+        });
+
+        // Smooth scroll for all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
-            
-            // Show all markets
-            renderMarkets(markets);
-            
-            showToast('Back to Dashboard');
-        }
-
-        function undoText() {
-            const analysisTextarea = document.getElementById('analysisText');
-            if (undoHistory.length > 1) {
-                isUndoRedo = true;
-                
-                // Move current state to redo history
-                const currentText = undoHistory.pop();
-                redoHistory.push(currentText);
-                
-                // Apply previous state
-                const previousText = undoHistory[undoHistory.length - 1];
-                analysisTextarea.value = previousText;
-                analysisTextarea.focus();
-                
-                isUndoRedo = false;
-            } else {
-                showToast('Nothing to undo');
-            }
-        }
-
-        function redoText() {
-            const analysisTextarea = document.getElementById('analysisText');
-            if (redoHistory.length > 0) {
-                isUndoRedo = true;
-                
-                // Get state from redo history
-                const nextText = redoHistory.pop();
-                undoHistory.push(nextText);
-                
-                // Apply next state
-                analysisTextarea.value = nextText;
-                analysisTextarea.focus();
-                
-                isUndoRedo = false;
-            } else {
-                showToast('Nothing to redo');
-            }
-        }
-
-        // Generate random password
-        function generatePassword() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            let password = '';
-            for (let i = 0; i < 8; i++) {
-                password += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return password;
-        }
-
-        // Copy credentials to clipboard
-        function copyCredentials() {
-            const username = document.getElementById('displayUsername').textContent;
-            const password = document.getElementById('displayPassword').textContent;
-            const text = `Username: ${username}\nPassword: ${password}`;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('Credentials copied to clipboard!');
-            }).catch(() => {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                showToast('Credentials copied!');
-            });
-        }
-
-        // Rich Text Editor Functions
-        function formatText(command, value = null) {
-            const textarea = document.getElementById('analysisText');
-            const start = textarea.selectionStart;
-            const end = textarea.selectionEnd;
-            const selectedText = textarea.value.substring(start, end);
-            
-            if (!selectedText) {
-                alert('Please select text first!');
-                return;
-            }
-            
-            let formattedText = '';
-            
-            switch(command) {
-                case 'bold':
-                    formattedText = `<strong>${selectedText}</strong>`;
-                    break;
-                case 'italic':
-                    formattedText = `<em>${selectedText}</em>`;
-                    break;
-                case 'underline':
-                    formattedText = `<u>${selectedText}</u>`;
-                    break;
-                case 'color':
-                    formattedText = `<span style="color: ${value}">${selectedText}</span>`;
-                    break;
-                case 'size':
-                    const sizes = {
-                        '2x': '2em',
-                        '1.5x': '1.5em',
-                        '1x': '1em',
-                        'A': '0.9em',
-                        'A-': '0.8em'
-                    };
-                    formattedText = `<span style="font-size: ${sizes[value]}">${selectedText}</span>`;
-                    break;
-            }
-            
-            textarea.value = textarea.value.substring(0, start) + formattedText + textarea.value.substring(end);
-            textarea.focus();
-        }
-
-        // Convert URLs to clickable links
-        function convertLinksToHTML(text) {
-            // Regular expression to detect URLs
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            return text.replace(urlRegex, '<a href="$1" target="_blank" style="color: #00ff88; text-decoration: underline;">$1</a>');
-        }
-
-        // Initialize with sample data (empty - admin will add markets)
-        const sampleMarkets = [];
-
-        // Initialize markets
-        loadFromLocalStorage();
-        
-        // If no saved markets, use sample data
-        if (markets.length === 0) {
-            markets = [...sampleMarkets];
-            saveToLocalStorage();
-        }
-        
-        renderMarkets();
-
-        // Setup undo/redo tracking after DOM is ready
-        const analysisTextarea = document.getElementById('analysisText');
-        let typingTimer;
-        
-        analysisTextarea.addEventListener('input', function() {
-            if (!isUndoRedo) {
-                clearTimeout(typingTimer);
-                typingTimer = setTimeout(() => {
-                    saveToHistory();
-                }, 500); // Save to history after 500ms of no typing
-            }
-        });
-
-        function saveToHistory() {
-            const currentText = analysisTextarea.value;
-            
-            // Only save if text is different from last history entry
-            if (undoHistory.length === 0 || undoHistory[undoHistory.length - 1] !== currentText) {
-                undoHistory.push(currentText);
-                
-                // Limit history to 50 entries
-                if (undoHistory.length > 50) {
-                    undoHistory.shift();
-                }
-                
-                // Clear redo history when new change is made
-                redoHistory = [];
-            }
-        }
-
-        // Admin Toggle with Authentication
-        document.getElementById('adminToggle').addEventListener('click', () => {
-            if (!isAdmin) {
-                // Show login prompt
-                const username = prompt('Enter admin username:');
-                if (!username) return;
-                
-                const password = prompt('Enter admin password:');
-                if (!password) return;
-                
-                // Validate credentials
-                const admin = adminUsers.find(a => a.username === username && a.password === password && a.active);
-                
-                if (admin) {
-                    isAdmin = true;
-                    isSuperAdmin = admin.role === 'super';
-                    currentAdminUsername = username;
-                    document.getElementById('adminPanel').classList.add('active');
-                    document.getElementById('addMarketBtn').style.display = 'block';
-                    document.getElementById('sortControls').style.display = 'flex';
-                    document.getElementById('adminToggle').textContent = 'Logout';
-                    
-                    if (isSuperAdmin) {
-                        document.getElementById('manageAdminsBtn').style.display = 'block';
-                        showToast('Welcome, Super Admin!');
-                    } else {
-                        showToast('Welcome, Admin!');
-                    }
-                    
-                    renderMarkets(); // Re-render to show edit/delete buttons
-                } else {
-                    showToast('Invalid credentials or account disabled!');
-                }
-            } else {
-                // Logout
-                isAdmin = false;
-                isSuperAdmin = false;
-                currentAdminUsername = null;
-                document.getElementById('adminPanel').classList.remove('active');
-                document.getElementById('superAdminPanel').classList.remove('active');
-                document.getElementById('addMarketBtn').style.display = 'none';
-                document.getElementById('manageAdminsBtn').style.display = 'none';
-                document.getElementById('sortControls').style.display = 'none';
-                document.getElementById('adminToggle').textContent = 'Admin';
-                showToast('Logged out');
-                renderMarkets(); // Re-render to hide buttons
-            }
-        });
-
-        // Manage Admins Button
-        document.getElementById('manageAdminsBtn').addEventListener('click', () => {
-            const panel = document.getElementById('superAdminPanel');
-            panel.classList.toggle('active');
-            if (panel.classList.contains('active')) {
-                renderAdminList();
-            }
-        });
-
-        // Generate Admin Access
-        document.getElementById('generateAdminBtn').addEventListener('click', () => {
-            const username = document.getElementById('newAdminUsername').value.trim();
-            
-            if (!username) {
-                showToast('Please enter a username!');
-                return;
-            }
-            
-            // Check if username already exists
-            if (adminUsers.find(a => a.username === username)) {
-                showToast('Username already exists!');
-                return;
-            }
-            
-            const password = generatePassword();
-            
-            adminUsers.push({
-                username: username,
-                password: password,
-                role: 'admin',
-                active: true,
-                createdBy: currentAdminUsername,
-                createdAt: new Date().toLocaleString()
-            });
-            
-            // Save to localStorage
-            saveToLocalStorage();
-            
-            // Display credentials
-            document.getElementById('displayUsername').textContent = username;
-            document.getElementById('displayPassword').textContent = password;
-            document.getElementById('generatedAccessCode').style.display = 'block';
-            
-            // Clear input
-            document.getElementById('newAdminUsername').value = '';
-            
-            // Refresh admin list
-            renderAdminList();
-            
-            showToast('Admin access created successfully!');
-        });
-
-        // Render Admin List
-        function renderAdminList() {
-            const adminList = document.getElementById('adminList');
-            const regularAdmins = adminUsers.filter(a => a.role === 'admin');
-            
-            if (regularAdmins.length === 0) {
-                adminList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No additional admins yet.</p>';
-                return;
-            }
-            
-            adminList.innerHTML = regularAdmins.map(admin => `
-                <div class="admin-item">
-                    <div class="admin-info">
-                        <div class="admin-username">${admin.username}</div>
-                        <div class="admin-role">Created by ${admin.createdBy} • ${admin.createdAt}</div>
-                        <div class="admin-role" style="color: ${admin.active ? '#00ff88' : '#ff4444'}">
-                            ${admin.active ? '● Active' : '● Disabled'}
-                        </div>
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn-revoke" onclick="toggleAdminAccess('${admin.username}')">
-                            ${admin.active ? 'Revoke' : 'Restore'}
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Toggle Admin Access
-        function toggleAdminAccess(username) {
-            const admin = adminUsers.find(a => a.username === username);
-            if (admin) {
-                admin.active = !admin.active;
-                saveToLocalStorage();
-                renderAdminList();
-                showToast(admin.active ? 'Admin access restored!' : 'Admin access revoked!');
-            }
-        }
-
-        // Image Upload Handlers
-        document.getElementById('marketImageUpload').addEventListener('click', () => {
-            document.getElementById('marketImageInput').click();
-        });
-
-        document.getElementById('marketImageInput').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const preview = document.getElementById('marketImagePreview');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        document.getElementById('analysisImageUpload').addEventListener('click', () => {
-            document.getElementById('analysisImageInput').click();
-        });
-
-        document.getElementById('analysisImageInput').addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const preview = document.getElementById('analysisImagePreview');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Market Form Submit
-        document.getElementById('marketForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const marketImageInput = document.getElementById('marketImageInput');
-            const analysisImageInput = document.getElementById('analysisImageInput');
-            const title = document.getElementById('marketTitle').value.trim();
-            const category = document.getElementById('marketCategory').value;
-            const analysis = document.getElementById('analysisText').value.trim();
-            
-            // Validate required fields
-            if (!title) {
-                showToast('Please enter a market title!');
-                return;
-            }
-            
-            if (!category) {
-                showToast('Please select a category!');
-                return;
-            }
-            
-            if (!analysis) {
-                showToast('Please write an analysis!');
-                return;
-            }
-            
-            // For new markets, image is required
-            if (!editingMarketId && !marketImageInput.files[0]) {
-                showToast('Please upload a market image!');
-                return;
-            }
-            
-            if (editingMarketId) {
-                // Edit existing market
-                const market = markets.find(m => m.id === editingMarketId);
-                if (market) {
-                    market.title = title;
-                    market.category = category;
-                    market.analysis = analysis;
-                    
-                    // Update images only if new ones are uploaded
-                    if (marketImageInput.files[0]) {
-                        market.image = URL.createObjectURL(marketImageInput.files[0]);
-                    }
-                    if (analysisImageInput.files[0]) {
-                        market.analysisImage = URL.createObjectURL(analysisImageInput.files[0]);
-                    }
-                    
-                    saveToLocalStorage();
-                    showToast('Market updated successfully!');
-                }
-                
-                // Reset edit mode
-                editingMarketId = null;
-                document.querySelector('#marketForm button[type="submit"]').textContent = 'Create Market';
-            } else {
-                // Create new market
-                const newMarket = {
-                    id: Date.now(),
-                    title: title,
-                    category: category,
-                    image: URL.createObjectURL(marketImageInput.files[0]),
-                    analysis: analysis,
-                    analysisImage: analysisImageInput.files[0] ? URL.createObjectURL(analysisImageInput.files[0]) : null,
-                    likes: 0,
-                    comments: [],
-                    createdBy: currentAdminUsername,
-                    createdAt: new Date().toLocaleString()
-                };
-                
-                markets.unshift(newMarket);
-                saveToLocalStorage();
-                showToast('Market created successfully!');
-            }
-            
-            renderMarkets();
-            
-            // Reset form
-            document.getElementById('marketForm').reset();
-            document.getElementById('marketImagePreview').style.display = 'none';
-            document.getElementById('analysisImagePreview').style.display = 'none';
-            
-            // Remove required attribute from image input for future edits
-            marketImageInput.removeAttribute('required');
-        });
-
-        // Render Markets
-        function renderMarkets(filteredMarkets = null) {
-            const marketsToRender = filteredMarkets || markets;
-            const grid = document.getElementById('marketsGrid');
-            
-            // Show empty state if no markets
-            if (marketsToRender.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 2rem;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;">📊</div>
-                        <h3 style="font-size: 1.5rem; color: var(--text-primary); margin-bottom: 0.5rem;">No Markets Yet</h3>
-                        <p style="color: var(--text-secondary); font-size: 1rem;">
-                            ${isAdmin ? 'Click "Add Market" to create your first market analysis!' : 'Check back soon for market analysis!'}
-                        </p>
-                    </div>
-                `;
-                return;
-            }
-            
-            grid.innerHTML = marketsToRender.map(market => `
-                <div class="market-card" data-id="${market.id}" draggable="${isAdmin && currentSortMode === 'manual'}" ondragstart="handleDragStart(event)" ondragend="handleDragEnd(event)" ondragover="handleDragOver(event)" ondrop="handleDrop(event)" ondragleave="handleDragLeave(event)">
-                    ${isAdmin && currentSortMode === 'manual' ? `<div class="drag-handle">⋮⋮</div>` : ''}
-                    ${isAdmin ? `
-                        <button class="edit-btn" onclick="editMarket(${market.id}, event)">✏️</button>
-                        <button class="delete-btn" onclick="deleteMarket(${market.id}, event)">✕</button>
-                    ` : ''}
-                    <div onclick="openMarket(${market.id})">
-                        <img src="${market.image}" alt="${market.title}" class="market-image">
-                        <div class="market-content">
-                            <h3 class="market-title">${market.title}</h3>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Drag and Drop Functions
-        let draggedElement = null;
-        let draggedId = null;
-
-        function handleDragStart(e) {
-            draggedElement = e.target.closest('.market-card');
-            draggedId = parseInt(draggedElement.dataset.id);
-            draggedElement.classList.add('dragging');
-            e.dataTransfer.effectAllowed = 'move';
-        }
-
-        function handleDragEnd(e) {
-            if (draggedElement) {
-                draggedElement.classList.remove('dragging');
-            }
-            
-            // Remove drag-over class from all cards
-            document.querySelectorAll('.market-card').forEach(card => {
-                card.classList.remove('drag-over');
-            });
-        }
-
-        function handleDragOver(e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'move';
-            
-            const targetCard = e.target.closest('.market-card');
-            if (targetCard && targetCard !== draggedElement) {
-                targetCard.classList.add('drag-over');
-            }
-            
-            return false;
-        }
-
-        function handleDragLeave(e) {
-            const targetCard = e.target.closest('.market-card');
-            if (targetCard) {
-                targetCard.classList.remove('drag-over');
-            }
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const targetCard = e.target.closest('.market-card');
-            if (!targetCard || targetCard === draggedElement) {
-                return false;
-            }
-            
-            const targetId = parseInt(targetCard.dataset.id);
-            
-            // Get current positions
-            const draggedIndex = markets.findIndex(m => m.id === draggedId);
-            const targetIndex = markets.findIndex(m => m.id === targetId);
-            
-            // Reorder array
-            const draggedMarket = markets[draggedIndex];
-            markets.splice(draggedIndex, 1);
-            markets.splice(targetIndex, 0, draggedMarket);
-            
-            // Update manual order
-            manualOrder = markets.map(m => m.id);
-            
-            // Save to localStorage
-            saveToLocalStorage();
-            
-            // Re-render
-            renderMarkets();
-            
-            showToast('Market order updated!');
-            
-            return false;
-        }
-
-        // Delete Market Function
-        function deleteMarket(id, event) {
-            event.stopPropagation();
-            
-            if (confirm('Are you sure you want to delete this market?')) {
-                markets = markets.filter(m => m.id !== id);
-                saveToLocalStorage();
-                renderMarkets();
-                showToast('Market deleted successfully!');
-            }
-        }
-
-        // Edit Market Function
-        function editMarket(id, event) {
-            event.stopPropagation();
-            
-            const market = markets.find(m => m.id === id);
-            if (!market) return;
-            
-            editingMarketId = id;
-            
-            // Scroll to admin panel
-            document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
-            
-            // Populate form with existing data
-            document.getElementById('marketTitle').value = market.title;
-            document.getElementById('marketCategory').value = market.category;
-            document.getElementById('analysisText').value = market.analysis;
-            
-            // Show existing market image
-            if (market.image) {
-                const preview = document.getElementById('marketImagePreview');
-                preview.src = market.image;
-                preview.style.display = 'block';
-            }
-            
-            // Show existing analysis image
-            if (market.analysisImage) {
-                const preview = document.getElementById('analysisImagePreview');
-                preview.src = market.analysisImage;
-                preview.style.display = 'block';
-            }
-            
-            // Remove required attribute from image input when editing (since image already exists)
-            document.getElementById('marketImageInput').removeAttribute('required');
-            
-            // Change button text
-            const submitBtn = document.querySelector('#marketForm button[type="submit"]');
-            submitBtn.textContent = 'Update Market';
-            
-            showToast('Editing market...');
-        }
-
-        // Sorting Function
-        function sortMarkets(sortType) {
-            currentSortMode = sortType;
-            
-            if (sortType === 'manual') {
-                // If manual order exists, use it
-                if (manualOrder.length > 0) {
-                    markets.sort((a, b) => {
-                        const aIndex = manualOrder.indexOf(a.id);
-                        const bIndex = manualOrder.indexOf(b.id);
-                        
-                        // If both are in manual order, sort by position
-                        if (aIndex !== -1 && bIndex !== -1) {
-                            return aIndex - bIndex;
-                        }
-                        // New items go to end
-                        if (aIndex === -1) return 1;
-                        if (bIndex === -1) return -1;
-                        return 0;
-                    });
-                }
-                saveToLocalStorage();
-                renderMarkets();
-                showToast('Drag and drop to reorder markets');
-                return;
-            }
-            
-            let sorted = [...markets];
-            
-            switch(sortType) {
-                case 'newest':
-                    sorted.sort((a, b) => b.id - a.id);
-                    break;
-                case 'oldest':
-                    sorted.sort((a, b) => a.id - b.id);
-                    break;
-                case 'title':
-                    sorted.sort((a, b) => a.title.localeCompare(b.title));
-                    break;
-                case 'category':
-                    sorted.sort((a, b) => a.category.localeCompare(b.category));
-                    break;
-                case 'likes':
-                    sorted.sort((a, b) => b.likes - a.likes);
-                    break;
-            }
-            
-            markets = sorted;
-            saveToLocalStorage();
-            renderMarkets();
-        }
-
-        // Open Market Modal
-        function openMarket(id) {
-            currentMarketId = id;
-            const market = markets.find(m => m.id === id);
-            
-            if (!market) return;
-            
-            // Track user interest
-            if (!userInterests[market.category]) {
-                userInterests[market.category] = 0;
-            }
-            userInterests[market.category]++;
-            
-            document.getElementById('modalTitle').textContent = market.title;
-            
-            // Show edit button for admins
-            const modalEditBtn = document.getElementById('modalEditBtn');
-            if (isAdmin) {
-                modalEditBtn.style.display = 'flex';
-            } else {
-                modalEditBtn.style.display = 'none';
-            }
-            
-            // Render HTML formatted text with automatic link conversion
-            const analysisWithLinks = convertLinksToHTML(market.analysis);
-            document.getElementById('modalAnalysisText').innerHTML = analysisWithLinks;
-            
-            const analysisImage = document.getElementById('modalAnalysisImage');
-            if (market.analysisImage) {
-                analysisImage.src = market.analysisImage;
-                analysisImage.style.display = 'block';
-            } else {
-                analysisImage.style.display = 'none';
-            }
-            
-            document.getElementById('likeCount').textContent = market.likes;
-            
-            renderComments(market.comments);
-            
-            document.getElementById('marketModal').classList.add('active');
-        }
-
-        // Close Modal
-        document.getElementById('closeModal').addEventListener('click', () => {
-            document.getElementById('marketModal').classList.remove('active');
-            currentMarketId = null;
-        });
-
-        // Modal Edit Button
-        document.getElementById('modalEditBtn').addEventListener('click', () => {
-            if (currentMarketId) {
-                // Close modal
-                document.getElementById('marketModal').classList.remove('active');
-                
-                // Trigger edit function
-                const event = { stopPropagation: () => {} };
-                editMarket(currentMarketId, event);
-            }
-        });
-
-        // Like Button
-        document.getElementById('likeBtn').addEventListener('click', function() {
-            const market = markets.find(m => m.id === currentMarketId);
-            if (!market) return;
-            
-            const isLiked = this.classList.contains('liked');
-            
-            if (isLiked) {
-                market.likes--;
-                this.classList.remove('liked');
-                document.getElementById('likeIcon').textContent = '👍';
-            } else {
-                market.likes++;
-                this.classList.add('liked');
-                document.getElementById('likeIcon').textContent = '❤️';
-            }
-            
-            document.getElementById('likeCount').textContent = market.likes;
-            saveToLocalStorage();
-        });
-
-        // Trade Button
-        document.getElementById('tradeBtn').addEventListener('click', () => {
-            window.open('https://opinion.trade', '_blank');
-        });
-
-        // Post Comment
-        document.getElementById('postCommentBtn').addEventListener('click', () => {
-            const market = markets.find(m => m.id === currentMarketId);
-            if (!market) return;
-            
-            const commentInput = document.getElementById('commentInput');
-            const commentText = commentInput.value.trim();
-            
-            if (!commentText) return;
-            
-            const comment = {
-                id: Date.now(),
-                author: 'User' + Math.floor(Math.random() * 1000),
-                text: commentText,
-                time: new Date().toLocaleString()
-            };
-            
-            market.comments.unshift(comment);
-            saveToLocalStorage();
-            renderComments(market.comments);
-            
-            commentInput.value = '';
-            showToast('Comment posted!');
-        });
-
-        // Render Comments
-        function renderComments(comments) {
-            const commentList = document.getElementById('commentList');
-            
-            if (comments.length === 0) {
-                commentList.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No comments yet. Be the first to comment!</p>';
-                return;
-            }
-            
-            commentList.innerHTML = comments.map(comment => `
-                <div class="comment">
-                    <div class="comment-author">${comment.author}</div>
-                    <div class="comment-text">${comment.text}</div>
-                    <div class="comment-time">${comment.time}</div>
-                </div>
-            `).join('');
-        }
-
-        // Search Functionality with Algorithm
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            
-            if (!query) {
-                // Reset to show all markets when search is cleared
-                renderMarkets(markets);
-                return;
-            }
-            
-            let filtered = markets.filter(market => 
-                market.title.toLowerCase().includes(query) ||
-                market.category.toLowerCase().includes(query) ||
-                market.analysis.toLowerCase().includes(query)
-            );
-            
-            // Sort by user interests - prioritize categories user has shown interest in
-            filtered.sort((a, b) => {
-                const aInterest = userInterests[a.category] || 0;
-                const bInterest = userInterests[b.category] || 0;
-                return bInterest - aInterest;
-            });
-            
-            renderMarkets(filtered);
-        });
-
-        // Category Filter
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                const category = this.dataset.category;
-                
-                // Track category interest
-                if (!userInterests[category]) {
-                    userInterests[category] = 0;
-                }
-                userInterests[category]++;
-                
-                // Filter and render
-                if (category === 'All') {
-                    renderMarkets(markets); // Show ALL markets
-                } else {
-                    const filtered = markets.filter(m => m.category === category);
-                    renderMarkets(filtered);
-                }
-            });
-        });
-
-        // Toast Notification
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-
-        // Close modal on outside click
-        document.getElementById('marketModal').addEventListener('click', (e) => {
-            if (e.target.id === 'marketModal') {
-                document.getElementById('marketModal').classList.remove('active');
-                currentMarketId = null;
-            }
-        });
-
-        // Sort button handlers
-        document.querySelectorAll('.sort-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                sortMarkets(this.dataset.sort);
-            });
-        });
-
-        // Performance optimizations
-        // Lazy load images
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    observer.unobserve(img);
-                }
-            });
-        });
-
-        // Virtual scrolling for large datasets
-        window.addEventListener('scroll', () => {
-            // Implement virtual scrolling if needed for very large datasets
         });
     </script>
 </body>
