@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Analysis - Opinion Analyst</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #ff8c00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .logo-text span {
+            color: #ff8c00;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ff8c00;
+        }
+
+        nav a.active {
+            color: #ff8c00;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #ff8c00;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #ff7200;
+            transform: scale(1.05);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .mobile-nav {
+            display: none;
+            background: white;
+            border-top: 1px solid #eee;
+            padding: 1rem 2rem;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 90px;
+            padding: 3rem 2rem;
+            min-height: calc(100vh - 90px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .page-title span {
+            color: #ff8c00;
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        /* Analysis Cards */
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .analysis-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .analysis-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+
+        .analysis-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .analysis-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .analysis-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #fff4e6;
+            color: #ff8c00;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .info-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .info-section h2 span {
+            color: #ff8c00;
+        }
+
+        .info-section p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section ul li {
+            padding: 0.5rem 0;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-section ul li:before {
+            content: "✓";
+            color: #ff8c00;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-text {
+            text-align: center;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav.desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">📊</div>
+                <div class="logo-text">Opinion<span>Analyst</span></div>
+            </a>
+            
+            <nav class="desktop-nav">
+                <a href="index.html">HOME</a>
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="opinion-cards.html">OPINION CARDS</a>
+                <a href="market-analysis.html" class="active">MARKET ANALYSIS</a>
+                <a href="https://opinion.trade" target="_blank" class="btn-primary">TRADE NOW</a>
+            </nav>
+
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+        
+        <div class="mobile-nav" id="mobileNav">
+            <a href="index.html" onclick="toggleMobileMenu()">HOME</a>
+            <a href="dashboard.html" onclick="toggleMobileMenu()">DASHBOARD</a>
+            <a href="opinion-cards.html" onclick="toggleMobileMenu()">OPINION CARDS</a>
+            <a href="market-analysis.html" onclick="toggleMobileMenu()" class="active">MARKET ANALYSIS</a>
+            <a href="https://opinion.trade" target="_blank" class="btn-primary">TRADE NOW</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <h1 class="page-title">Market <span>Analysis</span></h1>
+            <p class="page-subtitle">Comprehensive insights to guide your trading decisions</p>
+
+            <!-- Info Section -->
+            <div class="info-section">
+                <h2>About <span>Market Analysis</span></h2>
+                <p>
+                    Our Market Analysis feature provides detailed insights into Opinion Lab markets, 
+                    helping you make informed trading decisions based on real-time data and trends.
+                </p>
+                <p><strong>What you'll get:</strong></p>
+                <ul>
+                    <li>Real-time market sentiment analysis</li>
+                    <li>Historical trend data and patterns</li>
+                    <li>Volume and liquidity metrics</li>
+                    <li>Trader participation statistics</li>
+                    <li>Market momentum indicators</li>
+                    <li>Comparative analysis across markets</li>
+                </ul>
+            </div>
+
+            <!-- Analysis Cards -->
+            <div class="analysis-grid">
+                <div class="analysis-card">
+                    <div class="analysis-icon">📈</div>
+                    <h3>Trend Analysis</h3>
+                    <p>Identify market trends and momentum patterns to spot opportunities early.</p>
+                    <span class="status-badge">Coming Soon</span>
+                </div>
+
+                <div class="analysis-card">
+                    <div class="analysis-icon">🎯</div>
+                    <h3>Sentiment Tracking</h3>
+                    <p>Monitor community sentiment and trader behavior across different markets.</p>
+                    <span class="status-badge">Coming Soon</span>
+                </div>
+
+                <div class="analysis-card">
+                    <div class="analysis-icon">📊</div>
+                    <h3>Volume Metrics</h3>
+                    <p>Analyze trading volume and liquidity to gauge market health and activity.</p>
+                    <span class="status-badge">Coming Soon</span>
+                </div>
+
+                <div class="analysis-card">
+                    <div class="analysis-icon">🔍</div>
+                    <h3>Deep Dive Reports</h3>
+                    <p>Get comprehensive reports on specific markets with detailed analytics.</p>
+                    <span class="status-badge">Coming Soon</span>
+                </div>
+
+                <div class="analysis-card">
+                    <div class="analysis-icon">⚡</div>
+                    <h3>Real-Time Alerts</h3>
+                    <p>Receive notifications about significant market movements and opportunities.</p>
+                    <span class="status-badge">Coming Soon</span>
+                </div>
+
+                <div class="analysis-card">
+                    <div class="analysis-icon">📉</div>
+                    <h3>Risk Assessment</h3>
+                    <p>Evaluate market risks and volatility to make better trading decisions.</p>
+                    <span class="status-badge">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-text">
+            <p>&copy; 2025 Opinion Analyst. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Not for financial advice purposes. Do your own research.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobileNav');
+            mobileNav.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const mobileNav = document.getElementById('mobileNav');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (mobileNav.classList.contains('active') && 
+                !mobileNav.contains(e.target) && 
+                !menuBtn.contains(e.target)) {
+                mobileNav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
