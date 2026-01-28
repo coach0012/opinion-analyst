@@ -480,6 +480,114 @@
             color: #666;
         }
 
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: #ff8c00;
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card h3 {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff8c00;
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Market Table */
+        .market-table {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .market-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .market-table thead {
+            background: #ff8c00;
+            color: white;
+        }
+
+        .market-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .market-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .market-table tbody tr:hover {
+            background: #fff4e6;
+        }
+
+        /* Card Generator Form */
+        .card-generator-form {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff8c00;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             nav.desktop-nav {
@@ -519,6 +627,14 @@
             .slider-nav.next {
                 right: 1rem;
             }
+
+            .market-table {
+                overflow-x: auto;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -532,10 +648,10 @@
             </div>
             
             <nav class="desktop-nav">
-                <a href="#home">HOME</a>
-                <a href="#dashboard">DASHBOARD</a>
-                <a href="#opinion-cards">OPINION CARDS</a>
-                <a href="#market-analysis">MARKET ANALYSIS</a>
+                <a href="index.html">HOME</a>
+                <a href="dashboard.html">DASHBOARD</a>
+                <a href="opinion-cards.html">OPINION CARDS</a>
+                <a href="market-analysis.html">MARKET ANALYSIS</a>
                 <a href="https://opinion.trade" target="_blank" class="btn-primary">TRADE NOW</a>
             </nav>
 
@@ -543,10 +659,10 @@
         </div>
         
         <div class="mobile-nav" id="mobileNav">
-            <a href="#home" onclick="toggleMobileMenu()">HOME</a>
-            <a href="#dashboard" onclick="toggleMobileMenu()">DASHBOARD</a>
-            <a href="#opinion-cards" onclick="toggleMobileMenu()">OPINION CARDS</a>
-            <a href="#market-analysis" onclick="toggleMobileMenu()">MARKET ANALYSIS</a>
+            <a href="index.html" onclick="toggleMobileMenu()">HOME</a>
+            <a href="dashboard.html" onclick="toggleMobileMenu()">DASHBOARD</a>
+            <a href="opinion-cards.html" onclick="toggleMobileMenu()">OPINION CARDS</a>
+            <a href="market-analysis.html" onclick="toggleMobileMenu()">MARKET ANALYSIS</a>
             <a href="https://opinion.trade" target="_blank" class="btn-primary">TRADE NOW</a>
         </div>
     </header>
@@ -558,7 +674,7 @@
                 <h1>Analyze</h1>
                 <h2>LIVE MARKET INSIGHTS</h2>
                 <p>Real-time opinion statistics and market data analysis</p>
-                <button class="btn-primary" onclick="scrollToSection('opinion-cards')">START TODAY</button>
+                <a href="dashboard.html" class="btn-primary" style="display: inline-block; text-decoration: none;">START TODAY</a>
             </div>
         </div>
         <div class="hero-slide">
@@ -566,7 +682,7 @@
                 <h1>Decide</h1>
                 <h2>DATA-DRIVEN DECISIONS</h2>
                 <p>Comprehensive market analysis to guide your strategy</p>
-                <button class="btn-primary" onclick="scrollToSection('opinion-cards')">START TODAY</button>
+                <a href="market-analysis.html" class="btn-primary" style="display: inline-block; text-decoration: none;">START TODAY</a>
             </div>
         </div>
         <div class="hero-slide">
@@ -574,7 +690,7 @@
                 <h1>Create</h1>
                 <h2>PROFESSIONAL TRADING CARDS</h2>
                 <p>Generate high-quality trading cards for Opinion Lab</p>
-                <button class="btn-primary" onclick="scrollToSection('opinion-cards')">START TODAY</button>
+                <a href="opinion-cards.html" class="btn-primary" style="display: inline-block; text-decoration: none;">START TODAY</a>
             </div>
         </div>
 
@@ -588,8 +704,8 @@
         </div>
     </section>
 
-    <!-- Dashboard Section -->
-    <section class="about" id="dashboard">
+    <!-- About Section -->
+    <section class="about" id="about">
         <div class="container">
             <h2 class="section-title">About <span>Opinion Analyst</span></h2>
             <p class="section-subtitle">
@@ -603,8 +719,8 @@
         </div>
     </section>
 
-    <!-- Opinion Cards Section -->
-    <section class="features" id="opinion-cards">
+    <!-- Features Section -->
+    <section class="features" id="features">
         <div class="container">
             <h2 class="section-title">Our <span>Features</span></h2>
             <p class="section-subtitle">Powerful tools to enhance your Opinion Lab trading experience</p>
@@ -632,8 +748,8 @@
         </div>
     </section>
 
-    <!-- Market Analysis Section -->
-    <section class="how-it-works" id="market-analysis">
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
         <div class="container">
             <h2 class="section-title">How It <span>Works</span></h2>
             
@@ -664,7 +780,7 @@
             <p style="font-size: 1rem; margin-bottom: 1.5rem;">Join Opinion Lab and start trading today with our analytical insights</p>
             <div class="cta-buttons">
                 <a href="https://opinion.trade" target="_blank" class="btn-secondary">Trade Now</a>
-                <a href="https://docs.opinion.trade/about-opinion/about-opinion" target="_blank" class="btn-tertiary">Learn More</a>
+                <a href="https://x.com/opinionlabsxyz" target="_blank" class="btn-tertiary">Learn More</a>
             </div>
         </div>
     </section>
@@ -773,4 +889,3 @@
     </script>
 </body>
 </html>
-
