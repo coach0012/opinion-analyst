@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Opinion Analyst</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: #1a1a1a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #ff8c00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .logo-text span {
+            color: #ff8c00;
+        }
+
+        .back-btn {
+            background: #333;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid #555;
+        }
+
+        .back-btn:hover {
+            background: #444;
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .admin-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #fff;
+        }
+
+        .admin-title span {
+            color: #ff8c00;
+        }
+
+        /* Tabs */
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #2a2a2a;
+            padding-bottom: 1rem;
+        }
+
+        .admin-tab {
+            background: transparent;
+            color: #888;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .admin-tab:hover {
+            color: #fff;
+        }
+
+        .admin-tab.active {
+            color: #ff8c00;
+            border-bottom-color: #ff8c00;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Add Market Form */
+        .form-section {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #2a2a2a;
+            margin-bottom: 2rem;
+        }
+
+        .form-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: #aaa;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            background: #0f0f0f;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff8c00;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #ff8c00;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #ff7200;
+        }
+
+        .btn-secondary {
+            background: #333;
+            color: #fff;
+            border: 1px solid #555;
+        }
+
+        .btn-secondary:hover {
+            background: #444;
+        }
+
+        /* Markets Table */
+        .markets-table {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2a2a2a;
+        }
+
+        .markets-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .markets-table thead {
+            background: #2a2a2a;
+        }
+
+        .markets-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .markets-table td {
+            padding: 1rem;
+            border-top: 1px solid #2a2a2a;
+            color: #aaa;
+        }
+
+        .markets-table tbody tr:hover {
+            background: #0f0f0f;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-edit {
+            background: #0d6efd;
+            color: #fff;
+        }
+
+        .btn-edit:hover {
+            background: #0a58ca;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background: #bb2d3b;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: #2a2a2a;
+            color: #ff8c00;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .markets-table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">📊</div>
+                <div class="logo-text">Opinion<span>Analyst</span></div>
+            </a>
+            <a href="market-analysis.html" class="back-btn">← Back to Markets</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <h1 class="admin-title">Admin <span>Panel</span></h1>
+
+        <!-- Tabs -->
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="switchTab('add-market')">Add Market</button>
+            <button class="admin-tab" onclick="switchTab('manage-markets')">Manage Markets</button>
+            <button class="admin-tab" onclick="switchTab('ai-analysis')">AI Analysis</button>
+        </div>
+
+        <!-- Add Market Tab -->
+        <div id="add-market" class="tab-content active">
+            <div class="form-section">
+                <h3>Add New Market</h3>
+                <form id="addMarketForm" onsubmit="addMarket(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Market Name *</label>
+                            <input type="text" id="marketName" placeholder="e.g., Will Tesla (TSLA) close above..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category *</label>
+                            <select id="marketCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="macro">Macro</option>
+                                <option value="pre-ipo">Pre-IPO</option>
+                                <option value="crypto">Crypto</option>
+                                <option value="business">Business</option>
+                                <option value="politics">Politics</option>
+                                <option value="sports">Sports</option>
+                                <option value="tech">Tech</option>
+                                <option value="culture">Culture</option>
+                                <option value="more">More</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Icon (Emoji)</label>
+                            <input type="text" id="marketIcon" placeholder="e.g., 🚗" maxlength="2">
+                        </div>
+                        <div class="form-group">
+                            <label>Volume (USDT)</label>
+                            <input type="text" id="marketVolume" placeholder="e.g., 49.21M USDT">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label>AI Analysis / Description</label>
+                        <textarea id="marketAnalysis" placeholder="AI-generated market analysis and insights..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Add Market</button>
+                        <button type="reset" class="btn btn-secondary">Reset Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Manage Markets Tab -->
+        <div id="manage-markets" class="tab-content">
+            <div class="markets-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Market Name</th>
+                            <th>Category</th>
+                            <th>Volume</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marketsTableBody">
+                        <tr>
+                            <td colspan="6">
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">📊</div>
+                                    <p>No markets added yet. Add your first market to get started.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- AI Analysis Tab -->
+        <div id="ai-analysis" class="tab-content">
+            <div class="form-section">
+                <h3>AI Market Analysis Configuration</h3>
+                <p style="color: #888; margin-bottom: 2rem;">
+                    Configure AI analysis parameters for automatic market insights generation.
+                </p>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Analysis Frequency</label>
+                        <select>
+                            <option>Real-time</option>
+                            <option>Every Hour</option>
+                            <option>Every 6 Hours</option>
+                            <option>Daily</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>AI Model</label>
+                        <select>
+                            <option>GPT-4</option>
+                            <option>Claude</option>
+                            <option>Custom Model</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Analysis Depth</label>
+                        <select>
+                            <option>Basic</option>
+                            <option>Detailed</option>
+                            <option>Comprehensive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary">Save Configuration</button>
+                </div>
+            </div>
+
+            <div class="form-section" style="margin-top: 2rem;">
+                <h3>Generate AI Analysis</h3>
+                <div class="form-group">
+                    <label>Select Market for Analysis</label>
+                    <select id="analysisMarketSelect">
+                        <option>No markets available</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary" onclick="generateAIAnalysis()">Generate Analysis</button>
+                </div>
+                
+                <div id="analysisResult" style="display: none; margin-top: 2rem; padding: 1.5rem; background: #0f0f0f; border-radius: 8px; border: 1px solid #2a2a2a;">
+                    <h4 style="color: #ff8c00; margin-bottom: 1rem;">AI Analysis Result</h4>
+                    <p style="color: #aaa; line-height: 1.8;" id="analysisText"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Store markets in localStorage
+        let markets = JSON.parse(localStorage.getItem('opinionMarkets')) || [];
+
+        // Switch between tabs
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+
+            // Load markets when switching to manage tab
+            if (tabId === 'manage-markets') {
+                loadMarketsTable();
+            }
+        }
+
+        // Add market
+        function addMarket(event) {
+            event.preventDefault();
+            
+            const market = {
+                id: Date.now(),
+                name: document.getElementById('marketName').value,
+                category: document.getElementById('marketCategory').value,
+                icon: document.getElementById('marketIcon').value || '📊',
+                volume: document.getElementById('marketVolume').value || '0 USDT',
+                analysis: document.getElementById('marketAnalysis').value,
+                status: 'Active',
+                createdAt: new Date().toISOString()
+            };
+
+            markets.push(market);
+            localStorage.setItem('opinionMarkets', JSON.stringify(markets));
+            
+            alert('Market added successfully!');
+            document.getElementById('addMarketForm').reset();
+        }
+
+        // Load markets table
+        function loadMarketsTable() {
+            const tbody = document.getElementById('marketsTableBody');
+            
+            if (markets.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📊</div>
+                                <p>No markets added yet. Add your first market to get started.</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = markets.map(market => `
+                <tr>
+                    <td>${market.id}</td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="font-size: 1.5rem;">${market.icon}</span>
+                            <span>${market.name}</span>
+                        </div>
+                    </td>
+                    <td><span class="category-badge">${market.category}</span></td>
+                    <td>${market.volume}</td>
+                    <td><span style="color: #75f394;">${market.status}</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-small btn-edit" onclick="editMarket(${market.id})">Edit</button>
+                            <button class="btn-small btn-delete" onclick="deleteMarket(${market.id})">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update analysis market select
+            updateAnalysisSelect();
+        }
+
+        // Edit market
+        function editMarket(id) {
+            const market = markets.find(m => m.id === id);
+            if (!market) return;
+
+            // Switch to add market tab and populate form
+            switchTab('add-market');
+            document.querySelector('.admin-tab').click();
+            
+            document.getElementById('marketName').value = market.name;
+            document.getElementById('marketCategory').value = market.category;
+            document.getElementById('marketIcon').value = market.icon;
+            document.getElementById('marketVolume').value = market.volume;
+            document.getElementById('marketAnalysis').value = market.analysis || '';
+        }
+
+        // Delete market
+        function deleteMarket(id) {
+            if (confirm('Are you sure you want to delete this market?')) {
+                markets = markets.filter(m => m.id !== id);
+                localStorage.setItem('opinionMarkets', JSON.stringify(markets));
+                loadMarketsTable();
+                alert('Market deleted successfully!');
+            }
+        }
+
+        // Update analysis select
+        function updateAnalysisSelect() {
+            const select = document.getElementById('analysisMarketSelect');
+            if (markets.length === 0) {
+                select.innerHTML = '<option>No markets available</option>';
+            } else {
+                select.innerHTML = markets.map(m => 
+                    `<option value="${m.id}">${m.icon} ${m.name}</option>`
+                ).join('');
+            }
+        }
+
+        // Generate AI Analysis
+        function generateAIAnalysis() {
+            const resultDiv = document.getElementById('analysisResult');
+            const textDiv = document.getElementById('analysisText');
+            
+            resultDiv.style.display = 'block';
+            textDiv.innerHTML = 'Generating AI analysis... This feature will be integrated with AI API to provide real-time market insights, sentiment analysis, and predictions.';
+            
+            // Simulate AI analysis
+            setTimeout(() => {
+                textDiv.innerHTML = `
+                    <strong>Market Sentiment:</strong> Bullish with moderate volatility expected.<br><br>
+                    <strong>Key Factors:</strong> Recent announcements and market trends suggest positive momentum. Trading volume indicates strong interest from retail and institutional investors.<br><br>
+                    <strong>Recommendation:</strong> Monitor closely for the next 24-48 hours. Consider diversifying positions to manage risk.<br><br>
+                    <em style="color: #666;">Note: This is a placeholder. Real AI analysis will be integrated with your chosen AI model.</em>
+                `;
+            }, 2000);
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadMarketsTable();
+        });
+    </script>
+</body>
+</html>
