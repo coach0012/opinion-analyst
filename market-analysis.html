@@ -14,15 +14,15 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f9fafb;
-            color: #333;
+            background-color: #0a0a0a;
+            color: #fff;
             line-height: 1.6;
         }
 
         /* Header Styles */
         header {
-            background: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: #1a1a1a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
             position: fixed;
             width: 100%;
             top: 0;
@@ -30,7 +30,7 @@
         }
 
         .header-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 1rem 2rem;
             display: flex;
@@ -60,7 +60,7 @@
         .logo-text {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #333;
+            color: #fff;
         }
 
         .logo-text span {
@@ -75,7 +75,7 @@
 
         nav a {
             text-decoration: none;
-            color: #555;
+            color: #aaa;
             font-weight: 500;
             transition: color 0.3s;
         }
@@ -112,13 +112,13 @@
             border: none;
             font-size: 1.5rem;
             cursor: pointer;
-            color: #333;
+            color: #fff;
         }
 
         .mobile-nav {
             display: none;
-            background: white;
-            border-top: 1px solid #eee;
+            background: #1a1a1a;
+            border-top: 1px solid #333;
             padding: 1rem 2rem;
         }
 
@@ -131,123 +131,338 @@
         /* Main Content */
         main {
             margin-top: 90px;
-            padding: 3rem 2rem;
+            padding: 2rem;
             min-height: calc(100vh - 90px);
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
         .page-title {
-            text-align: center;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: #333;
+            font-size: 2rem;
+            color: #fff;
         }
 
         .page-title span {
             color: #ff8c00;
         }
 
-        .page-subtitle {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #666;
-            margin-bottom: 3rem;
+        .admin-btn {
+            background: #ff8c00;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
         }
 
-        /* Analysis Cards */
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+        .admin-btn:hover {
+            background: #ff7200;
+            transform: scale(1.05);
         }
 
-        .analysis-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .category-tab {
+            background: #1a1a1a;
+            color: #aaa;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid #333;
+            cursor: pointer;
+            font-weight: 500;
+            white-space: nowrap;
             transition: all 0.3s;
         }
 
-        .analysis-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        .category-tab:hover {
+            border-color: #ff8c00;
+            color: #fff;
         }
 
-        .analysis-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .category-tab.active {
+            background: #ff8c00;
+            color: #fff;
+            border-color: #ff8c00;
         }
 
-        .analysis-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #333;
+        /* Market Cards Grid */
+        .markets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
         }
 
-        .analysis-card p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .status-badge {
-            display: inline-block;
-            background: #fff4e6;
-            color: #ff8c00;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Info Section */
-        .info-section {
-            background: white;
-            padding: 2rem;
+        .market-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
         }
 
-        .info-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #333;
+        .market-card:hover {
+            border-color: #ff8c00;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(255, 140, 0, 0.2);
         }
 
-        .info-section h2 span {
-            color: #ff8c00;
-        }
-
-        .info-section p {
-            color: #666;
-            line-height: 1.8;
+        .market-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             margin-bottom: 1rem;
         }
 
-        .info-section ul {
-            list-style: none;
-            padding-left: 0;
+        .market-icon {
+            width: 50px;
+            height: 50px;
+            background: #2a2a2a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
         }
 
-        .info-section ul li {
-            padding: 0.5rem 0;
-            color: #666;
+        .market-info h3 {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .market-info p {
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .market-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .market-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            background: #0f0f0f;
+            border-radius: 6px;
+        }
+
+        .option-left {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .info-section ul li:before {
-            content: "✓";
-            color: #ff8c00;
-            font-weight: bold;
-            font-size: 1.2rem;
+        .option-name {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .option-percentage {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .option-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .vote-btn {
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .vote-yes {
+            background: #0f5132;
+            color: #75f394;
+        }
+
+        .vote-yes:hover {
+            background: #146c43;
+        }
+
+        .vote-no {
+            background: #58151c;
+            color: #ea868f;
+        }
+
+        .vote-no:hover {
+            background: #842029;
+        }
+
+        .market-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #2a2a2a;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .volume-icon {
+            color: #00d9a0;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #aaa;
+        }
+
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .login-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .login-group label {
+            color: #aaa;
+            font-weight: 600;
+        }
+
+        .login-group input {
+            background: #0f0f0f;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .login-group input:focus {
+            outline: none;
+            border-color: #ff8c00;
+        }
+
+        .login-btn {
+            background: #ff8c00;
+            color: #fff;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #ff7200;
+        }
+
+        .error-message {
+            color: #ea868f;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
         }
 
         /* Footer */
@@ -256,6 +471,7 @@
             color: white;
             padding: 2rem;
             margin-top: 3rem;
+            border-top: 1px solid #2a2a2a;
         }
 
         .footer-text {
@@ -273,8 +489,14 @@
                 display: block;
             }
 
-            .page-title {
-                font-size: 2rem;
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .markets-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -311,73 +533,58 @@
     <!-- Main Content -->
     <main>
         <div class="container">
-            <h1 class="page-title">Market <span>Analysis</span></h1>
-            <p class="page-subtitle">Comprehensive insights to guide your trading decisions</p>
-
-            <!-- Info Section -->
-            <div class="info-section">
-                <h2>About <span>Market Analysis</span></h2>
-                <p>
-                    Our Market Analysis feature provides detailed insights into Opinion Lab markets, 
-                    helping you make informed trading decisions based on real-time data and trends.
-                </p>
-                <p><strong>What you'll get:</strong></p>
-                <ul>
-                    <li>Real-time market sentiment analysis</li>
-                    <li>Historical trend data and patterns</li>
-                    <li>Volume and liquidity metrics</li>
-                    <li>Trader participation statistics</li>
-                    <li>Market momentum indicators</li>
-                    <li>Comparative analysis across markets</li>
-                </ul>
+            <div class="page-header">
+                <h1 class="page-title">Market <span>Analysis</span></h1>
+                <button class="admin-btn" onclick="showAdminLogin()">🔐 Admin Panel</button>
             </div>
 
-            <!-- Analysis Cards -->
-            <div class="analysis-grid">
-                <div class="analysis-card">
-                    <div class="analysis-icon">📈</div>
-                    <h3>Trend Analysis</h3>
-                    <p>Identify market trends and momentum patterns to spot opportunities early.</p>
-                    <span class="status-badge">Coming Soon</span>
-                </div>
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <button class="category-tab active" onclick="filterCategory('all')">All</button>
+                <button class="category-tab" onclick="filterCategory('macro')">Macro</button>
+                <button class="category-tab" onclick="filterCategory('pre-ipo')">Pre-IPO</button>
+                <button class="category-tab" onclick="filterCategory('crypto')">Crypto</button>
+                <button class="category-tab" onclick="filterCategory('business')">Business</button>
+                <button class="category-tab" onclick="filterCategory('politics')">Politics</button>
+                <button class="category-tab" onclick="filterCategory('sports')">Sports</button>
+                <button class="category-tab" onclick="filterCategory('tech')">Tech</button>
+                <button class="category-tab" onclick="filterCategory('culture')">Culture</button>
+                <button class="category-tab" onclick="filterCategory('more')">More</button>
+            </div>
 
-                <div class="analysis-card">
-                    <div class="analysis-icon">🎯</div>
-                    <h3>Sentiment Tracking</h3>
-                    <p>Monitor community sentiment and trader behavior across different markets.</p>
-                    <span class="status-badge">Coming Soon</span>
-                </div>
-
-                <div class="analysis-card">
-                    <div class="analysis-icon">📊</div>
-                    <h3>Volume Metrics</h3>
-                    <p>Analyze trading volume and liquidity to gauge market health and activity.</p>
-                    <span class="status-badge">Coming Soon</span>
-                </div>
-
-                <div class="analysis-card">
-                    <div class="analysis-icon">🔍</div>
-                    <h3>Deep Dive Reports</h3>
-                    <p>Get comprehensive reports on specific markets with detailed analytics.</p>
-                    <span class="status-badge">Coming Soon</span>
-                </div>
-
-                <div class="analysis-card">
-                    <div class="analysis-icon">⚡</div>
-                    <h3>Real-Time Alerts</h3>
-                    <p>Receive notifications about significant market movements and opportunities.</p>
-                    <span class="status-badge">Coming Soon</span>
-                </div>
-
-                <div class="analysis-card">
-                    <div class="analysis-icon">📉</div>
-                    <h3>Risk Assessment</h3>
-                    <p>Evaluate market risks and volatility to make better trading decisions.</p>
-                    <span class="status-badge">Coming Soon</span>
+            <!-- Markets Grid -->
+            <div class="markets-grid" id="marketsGrid">
+                <!-- Markets will be loaded here -->
+                <div class="empty-state">
+                    <div class="empty-state-icon">🔄</div>
+                    <h3>Loading Markets...</h3>
+                    <p>Fetching data from Opinion Lab</p>
                 </div>
             </div>
         </div>
     </main>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Admin Login</h2>
+                <button class="modal-close" onclick="closeAdminLogin()">×</button>
+            </div>
+            <form class="login-form" onsubmit="handleAdminLogin(event)">
+                <div class="login-group">
+                    <label for="adminName">Name</label>
+                    <input type="text" id="adminName" placeholder="Enter your name" required>
+                </div>
+                <div class="login-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" placeholder="Enter your password" required>
+                </div>
+                <p class="error-message" id="errorMessage">Invalid credentials. Please try again.</p>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -388,6 +595,130 @@
     </footer>
 
     <script>
+        // No sample markets - will be loaded from API
+        let allMarkets = [];
+        let currentCategory = 'all';
+
+        // Load markets on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            loadMarkets();
+        });
+
+        function loadMarkets() {
+            // Check if admin has added markets
+            const storedMarkets = localStorage.getItem('opinionMarkets');
+            if (storedMarkets) {
+                allMarkets = JSON.parse(storedMarkets);
+            }
+            
+            renderMarkets();
+        }
+
+        function renderMarkets() {
+            const grid = document.getElementById('marketsGrid');
+            const filteredMarkets = currentCategory === 'all' 
+                ? allMarkets 
+                : allMarkets.filter(m => m.category === currentCategory);
+
+            if (filteredMarkets.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📊</div>
+                        <h3>No Markets Available</h3>
+                        <p>Markets will appear here once they are added via the admin panel or fetched from Opinion Lab API.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filteredMarkets.map(market => `
+                <div class="market-card" onclick="viewMarketDetails(${market.id})">
+                    <div class="market-header">
+                        <div class="market-icon">${market.icon}</div>
+                        <div class="market-info">
+                            <h3>${market.name}</h3>
+                        </div>
+                    </div>
+                    <div class="market-options">
+                        ${market.options ? market.options.map(option => `
+                            <div class="market-option">
+                                <div class="option-left">
+                                    <span class="option-name">${option.name}</span>
+                                    <span class="option-percentage">${option.percentage}</span>
+                                </div>
+                                <div class="option-right">
+                                    <button class="vote-btn vote-yes" onclick="event.stopPropagation()">YES</button>
+                                    <button class="vote-btn vote-no" onclick="event.stopPropagation()">NO</button>
+                                </div>
+                            </div>
+                        `).join('') : '<p style="color: #888; padding: 0.5rem;">No options available</p>'}
+                    </div>
+                    <div class="market-footer">
+                        <span class="volume-icon">⊕</span>
+                        <span>Vol. ${market.volume || '0 USDT'}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            // Update active tab
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Re-render markets
+            renderMarkets();
+        }
+
+        function viewMarketDetails(marketId) {
+            const market = allMarkets.find(m => m.id === marketId);
+            if (market && market.analysis) {
+                alert(`Market: ${market.name}\n\nAI Analysis:\n${market.analysis}`);
+            } else {
+                alert(`Market: ${market.name}\n\nAI analysis will be available once integrated with the API.`);
+            }
+        }
+
+        // Admin Login Functions
+        function showAdminLogin() {
+            document.getElementById('loginModal').classList.add('active');
+            document.getElementById('errorMessage').classList.remove('show');
+            document.getElementById('adminName').value = '';
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('loginModal').classList.remove('active');
+        }
+
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('adminName').value.trim();
+            const password = document.getElementById('adminPassword').value;
+            
+            // Check credentials
+            if (name === 'coach' && password === '12345') {
+                // Login successful
+                closeAdminLogin();
+                window.location.href = 'admin.html';
+            } else {
+                // Show error
+                document.getElementById('errorMessage').classList.add('show');
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeAdminLogin();
+            }
+        });
+
         // Mobile menu toggle
         function toggleMobileMenu() {
             const mobileNav = document.getElementById('mobileNav');
