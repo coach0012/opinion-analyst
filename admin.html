@@ -189,6 +189,30 @@
             resize: vertical;
         }
 
+        /* Editor Toolbar */
+        .editor-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-btn {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .toolbar-btn:hover {
+            background: #ff8c00;
+            border-color: #ff8c00;
+        }
+
         .form-actions {
             display: flex;
             gap: 1rem;
@@ -379,15 +403,27 @@
                                 <img id="previewImg" style="max-width: 100px; max-height: 100px; border-radius: 8px; border: 1px solid #333;">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Volume (USDT)</label>
-                            <input type="text" id="marketVolume" placeholder="e.g., 49.21M USDT">
-                        </div>
                     </div>
                     
                     <div class="form-group" style="margin-top: 1rem;">
                         <label>AI Analysis / Description</label>
-                        <textarea id="marketAnalysis" placeholder="AI-generated market analysis and insights..."></textarea>
+                        <div class="editor-toolbar">
+                            <button type="button" class="toolbar-btn" onclick="formatText('bold')" title="Bold"><strong>B</strong></button>
+                            <button type="button" class="toolbar-btn" onclick="formatText('heading1')" title="Heading 1">H1</button>
+                            <button type="button" class="toolbar-btn" onclick="formatText('heading2')" title="Heading 2">H2</button>
+                            <button type="button" class="toolbar-btn" onclick="formatText('heading3')" title="Heading 3">H3</button>
+                            <button type="button" class="toolbar-btn" onclick="formatText('link')" title="Insert Link">🔗</button>
+                            <button type="button" class="toolbar-btn" onclick="formatText('break')" title="Line Break">↵</button>
+                            <button type="button" class="toolbar-btn" onclick="insertImage()" title="Insert Image">🖼️</button>
+                        </div>
+                        <textarea id="marketAnalysis" placeholder="Write your market analysis here...
+
+Tips:
+- Use the toolbar buttons to format text
+- **text** for bold
+- Add links by selecting text and clicking 🔗
+- Press 'Insert Image' to add images
+- The analysis will be displayed beautifully to users"></textarea>
                     </div>
 
                     <div class="form-actions">
@@ -407,7 +443,7 @@
                             <th>ID</th>
                             <th>Market Name</th>
                             <th>Category</th>
-                            <th>Volume</th>
+                            <th>Likes</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -584,6 +620,78 @@
             }
         };
 
+        // Rich text formatting functions
+        window.formatText = function(type) {
+            const textarea = document.getElementById('marketAnalysis');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            let formattedText = '';
+
+            switch(type) {
+                case 'bold':
+                    formattedText = `<strong>${selectedText || 'bold text'}</strong>`;
+                    break;
+                case 'heading1':
+                    formattedText = `<h1>${selectedText || 'Heading 1'}</h1>\n`;
+                    break;
+                case 'heading2':
+                    formattedText = `<h2>${selectedText || 'Heading 2'}</h2>\n`;
+                    break;
+                case 'heading3':
+                    formattedText = `<h3>${selectedText || 'Heading 3'}</h3>\n`;
+                    break;
+                case 'link':
+                    const url = prompt('Enter URL:');
+                    if (url) {
+                        formattedText = `<a href="${url}">${selectedText || url}</a>`;
+                    }
+                    break;
+                case 'break':
+                    formattedText = '\n\n';
+                    break;
+            }
+
+            if (formattedText) {
+                const newValue = textarea.value.substring(0, start) + formattedText + textarea.value.substring(end);
+                textarea.value = newValue;
+                textarea.focus();
+                textarea.setSelectionRange(start + formattedText.length, start + formattedText.length);
+            }
+        };
+
+        window.insertImage = function() {
+            const url = prompt('Enter image URL (or leave empty to upload from file):');
+            if (url) {
+                const textarea = document.getElementById('marketAnalysis');
+                const cursorPos = textarea.selectionStart;
+                const imgTag = `<img src="${url}" alt="Image" style="max-width: 100%; border-radius: 8px; margin: 1rem 0;">`;
+                const newValue = textarea.value.substring(0, cursorPos) + imgTag + textarea.value.substring(cursorPos);
+                textarea.value = newValue;
+                textarea.focus();
+            } else {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(event) {
+                            const textarea = document.getElementById('marketAnalysis');
+                            const cursorPos = textarea.selectionStart;
+                            const imgTag = `<img src="${event.target.result}" alt="Image" style="max-width: 100%; border-radius: 8px; margin: 1rem 0;">`;
+                            const newValue = textarea.value.substring(0, cursorPos) + imgTag + textarea.value.substring(cursorPos);
+                            textarea.value = newValue;
+                            textarea.focus();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                };
+                input.click();
+            }
+        };
+
         // Switch between tabs
         window.switchTab = function(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => {
@@ -621,8 +729,8 @@
                 name: document.getElementById('marketName').value,
                 category: document.getElementById('marketCategory').value,
                 image: imageData,
-                volume: document.getElementById('marketVolume').value || '0 USDT',
                 analysis: document.getElementById('marketAnalysis').value,
+                likes: 0,
                 status: 'Active',
                 createdAt: new Date().toISOString()
             };
@@ -668,7 +776,7 @@
                         </div>
                     </td>
                     <td><span class="category-badge">${market.category}</span></td>
-                    <td>${market.volume}</td>
+                    <td>👍 ${market.likes || 0}</td>
                     <td><span style="color: #75f394;">${market.status}</span></td>
                     <td>
                         <div class="action-btns">
@@ -692,7 +800,6 @@
             
             document.getElementById('marketName').value = market.name;
             document.getElementById('marketCategory').value = market.category;
-            document.getElementById('marketVolume').value = market.volume;
             document.getElementById('marketAnalysis').value = market.analysis || '';
             
             if (market.image) {
