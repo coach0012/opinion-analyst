@@ -594,21 +594,74 @@
         </div>
     </footer>
 
-    <script>
-        // No sample markets - will be loaded from API
+    <script type="module">
+        // Firebase Configuration
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, get, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAqE0FcMPu4x9jALkT5VH1EIBoVgpdTg2U",
+            authDomain: "opinion-analyst.firebaseapp.com",
+            databaseURL: "https://opinion-analyst-default-rtdb.firebaseio.com",
+            projectId: "opinion-analyst",
+            storageBucket: "opinion-analyst.firebasestorage.app",
+            messagingSenderId: "953209116569",
+            appId: "1:953209116569:web:ec8011c80cc6ea696ae508",
+            measurementId: "G-DVM11B2NEX"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        console.log('🔥 Firebase connected successfully!');
+
         let allMarkets = [];
         let currentCategory = 'all';
 
         // Load markets on page load
         window.addEventListener('DOMContentLoaded', () => {
             loadMarkets();
+            
+            // Set up real-time listener for market updates
+            if (database) {
+                const marketsRef = ref(database, 'markets');
+                onValue(marketsRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        allMarkets = Object.values(data);
+                        renderMarkets();
+                    }
+                });
+            }
         });
 
-        function loadMarkets() {
-            // Check if admin has added markets
-            const storedMarkets = localStorage.getItem('opinionMarkets');
-            if (storedMarkets) {
-                allMarkets = JSON.parse(storedMarkets);
+        async function loadMarkets() {
+            try {
+                if (database) {
+                    const marketsRef = ref(database, 'markets');
+                    const snapshot = await get(marketsRef);
+                    
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        allMarkets = Object.values(data);
+                    } else {
+                        allMarkets = [];
+                    }
+                } else {
+                    // Fallback to localStorage
+                    const storedMarkets = localStorage.getItem('opinionMarkets');
+                    if (storedMarkets) {
+                        allMarkets = JSON.parse(storedMarkets);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading markets:', error);
+                // Fallback to localStorage
+                const storedMarkets = localStorage.getItem('opinionMarkets');
+                if (storedMarkets) {
+                    allMarkets = JSON.parse(storedMarkets);
+                }
             }
             
             renderMarkets();
@@ -634,7 +687,9 @@
             grid.innerHTML = filteredMarkets.map(market => `
                 <div class="market-card" onclick="viewMarketDetails(${market.id})">
                     <div class="market-header">
-                        <div class="market-icon">${market.icon}</div>
+                        <div class="market-icon">
+                            ${market.image ? `<img src="${market.image}" style="width: 100%; height: 100%; border-radius: 8px; object-fit: cover;">` : '📊'}
+                        </div>
                         <div class="market-info">
                             <h3>${market.name}</h3>
                         </div>
@@ -651,7 +706,7 @@
                                     <button class="vote-btn vote-no" onclick="event.stopPropagation()">NO</button>
                                 </div>
                             </div>
-                        `).join('') : '<p style="color: #888; padding: 0.5rem;">No options available</p>'}
+                        `).join('') : ''}
                     </div>
                     <div class="market-footer">
                         <span class="volume-icon">⊕</span>
@@ -661,7 +716,7 @@
             `).join('');
         }
 
-        function filterCategory(category) {
+        window.filterCategory = function(category) {
             currentCategory = category;
             
             // Update active tab
@@ -672,30 +727,30 @@
             
             // Re-render markets
             renderMarkets();
-        }
+        };
 
-        function viewMarketDetails(marketId) {
+        window.viewMarketDetails = function(marketId) {
             const market = allMarkets.find(m => m.id === marketId);
             if (market && market.analysis) {
                 alert(`Market: ${market.name}\n\nAI Analysis:\n${market.analysis}`);
             } else {
                 alert(`Market: ${market.name}\n\nAI analysis will be available once integrated with the API.`);
             }
-        }
+        };
 
         // Admin Login Functions
-        function showAdminLogin() {
+        window.showAdminLogin = function() {
             document.getElementById('loginModal').classList.add('active');
             document.getElementById('errorMessage').classList.remove('show');
             document.getElementById('adminName').value = '';
             document.getElementById('adminPassword').value = '';
-        }
+        };
 
-        function closeAdminLogin() {
+        window.closeAdminLogin = function() {
             document.getElementById('loginModal').classList.remove('active');
-        }
+        };
 
-        function handleAdminLogin(event) {
+        window.handleAdminLogin = function(event) {
             event.preventDefault();
             
             const name = document.getElementById('adminName').value.trim();
@@ -710,7 +765,7 @@
                 // Show error
                 document.getElementById('errorMessage').classList.add('show');
             }
-        }
+        };
 
         // Close modal when clicking outside
         document.getElementById('loginModal').addEventListener('click', function(e) {
@@ -720,10 +775,10 @@
         });
 
         // Mobile menu toggle
-        function toggleMobileMenu() {
+        window.toggleMobileMenu = function() {
             const mobileNav = document.getElementById('mobileNav');
             mobileNav.classList.toggle('active');
-        }
+        };
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', (e) => {
