@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Details - Opinion Analyst</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: #1a1a1a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: #ff8c00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .logo-text span {
+            color: #ff8c00;
+        }
+
+        .back-btn {
+            background: #333;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid #555;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #444;
+            border-color: #ff8c00;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 90px;
+            padding: 2rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            min-height: calc(100vh - 90px);
+        }
+
+        .market-header {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .market-title-section {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .market-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid #2a2a2a;
+        }
+
+        .market-title {
+            flex: 1;
+        }
+
+        .market-title h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background: #2a2a2a;
+            color: #ff8c00;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Analysis Section */
+        .analysis-section {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .analysis-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #2a2a2a;
+        }
+
+        .analysis-header h2 {
+            font-size: 1.8rem;
+            color: #fff;
+        }
+
+        .analysis-header h2 span {
+            color: #ff8c00;
+        }
+
+        .analysis-content {
+            color: #ccc;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .analysis-content h1,
+        .analysis-content h2,
+        .analysis-content h3 {
+            color: #fff;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .analysis-content h1 {
+            font-size: 2rem;
+        }
+
+        .analysis-content h2 {
+            font-size: 1.6rem;
+        }
+
+        .analysis-content h3 {
+            font-size: 1.3rem;
+        }
+
+        .analysis-content strong {
+            color: #ff8c00;
+            font-weight: 700;
+        }
+
+        .analysis-content a {
+            color: #4da6ff;
+            text-decoration: underline;
+            word-break: break-all;
+        }
+
+        .analysis-content a:hover {
+            color: #66b3ff;
+        }
+
+        .analysis-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border: 1px solid #2a2a2a;
+        }
+
+        .analysis-content ul,
+        .analysis-content ol {
+            margin-left: 2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Like Section */
+        .like-section {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .like-question {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: #ccc;
+        }
+
+        .like-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .like-btn {
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .like-btn.yes {
+            background: #0f5132;
+            color: #75f394;
+        }
+
+        .like-btn.yes:hover {
+            background: #146c43;
+            transform: scale(1.05);
+        }
+
+        .like-btn.no {
+            background: #58151c;
+            color: #ea868f;
+        }
+
+        .like-btn.no:hover {
+            background: #842029;
+            transform: scale(1.05);
+        }
+
+        .like-btn.liked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .like-count {
+            margin-top: 1.5rem;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .like-count span {
+            color: #ff8c00;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid #2a2a2a;
+            text-align: center;
+        }
+
+        .footer-text {
+            color: #666;
+        }
+
+        /* Empty State */
+        .empty-analysis {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+
+        .empty-analysis-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .market-title-section {
+                flex-direction: column;
+            }
+
+            .market-title h1 {
+                font-size: 1.5rem;
+            }
+
+            .analysis-content {
+                font-size: 1rem;
+            }
+
+            .like-buttons {
+                flex-direction: column;
+            }
+
+            .like-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">📊</div>
+                <div class="logo-text">Opinion<span>Analyst</span></div>
+            </a>
+            <a href="market-analysis.html" class="back-btn">← Back to Markets</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="market-header">
+            <div class="market-title-section">
+                <img id="marketImage" class="market-image" src="" alt="Market" style="display: none;">
+                <div class="market-title">
+                    <h1 id="marketName">Loading...</h1>
+                    <span id="marketCategory" class="category-badge"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-section">
+            <div class="analysis-header">
+                <h2>AI <span>Analysis</span></h2>
+            </div>
+            <div id="analysisContent" class="analysis-content">
+                <div class="empty-analysis">
+                    <div class="empty-analysis-icon">📊</div>
+                    <p>Loading analysis...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="like-section">
+            <p class="like-question">Did you find this analysis helpful?</p>
+            <div class="like-buttons">
+                <button class="like-btn yes" id="likeBtn" onclick="likeAnalysis(true)">
+                    👍 Yes, helpful!
+                </button>
+                <button class="like-btn no" id="dislikeBtn" onclick="likeAnalysis(false)">
+                    👎 Not helpful
+                </button>
+            </div>
+            <p class="like-count">
+                <span id="likeCount">0</span> people found this helpful
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-text">
+            <p>&copy; 2025 Opinion Analyst. All rights reserved.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">Not for financial advice purposes. Do your own research.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Firebase Configuration
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, get, update } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAqE0FcMPu4x9jALkT5VH1EIBoVgpdTg2U",
+            authDomain: "opinion-analyst.firebaseapp.com",
+            databaseURL: "https://opinion-analyst-default-rtdb.firebaseio.com",
+            projectId: "opinion-analyst",
+            storageBucket: "opinion-analyst.firebasestorage.app",
+            messagingSenderId: "953209116569",
+            appId: "1:953209116569:web:ec8011c80cc6ea696ae508",
+            measurementId: "G-DVM11B2NEX"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let currentMarket = null;
+
+        // Get market ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const marketId = urlParams.get('id');
+
+        // Load market details
+        async function loadMarket() {
+            if (!marketId) {
+                window.location.href = 'market-analysis.html';
+                return;
+            }
+
+            try {
+                const marketRef = ref(database, `markets/${marketId}`);
+                const snapshot = await get(marketRef);
+                
+                if (snapshot.exists()) {
+                    currentMarket = snapshot.val();
+                    displayMarket();
+                } else {
+                    // Fallback to localStorage
+                    const markets = JSON.parse(localStorage.getItem('opinionMarkets')) || [];
+                    currentMarket = markets.find(m => m.id == marketId);
+                    if (currentMarket) {
+                        displayMarket();
+                    } else {
+                        alert('Market not found');
+                        window.location.href = 'market-analysis.html';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading market:', error);
+                // Try localStorage fallback
+                const markets = JSON.parse(localStorage.getItem('opinionMarkets')) || [];
+                currentMarket = markets.find(m => m.id == marketId);
+                if (currentMarket) {
+                    displayMarket();
+                }
+            }
+        }
+
+        function displayMarket() {
+            document.getElementById('marketName').textContent = currentMarket.name;
+            document.getElementById('marketCategory').textContent = currentMarket.category.toUpperCase();
+            
+            if (currentMarket.image) {
+                const img = document.getElementById('marketImage');
+                img.src = currentMarket.image;
+                img.style.display = 'block';
+            }
+
+            // Display analysis with HTML formatting
+            const analysisDiv = document.getElementById('analysisContent');
+            if (currentMarket.analysis && currentMarket.analysis.trim()) {
+                analysisDiv.innerHTML = formatAnalysis(currentMarket.analysis);
+            } else {
+                analysisDiv.innerHTML = `
+                    <div class="empty-analysis">
+                        <div class="empty-analysis-icon">📭</div>
+                        <p>No analysis available for this market yet.</p>
+                    </div>
+                `;
+            }
+
+            // Display like count
+            const likeCount = currentMarket.likes || 0;
+            document.getElementById('likeCount').textContent = likeCount;
+
+            // Check if user already liked
+            const likedMarkets = JSON.parse(localStorage.getItem('likedMarkets') || '{}');
+            if (likedMarkets[marketId]) {
+                const likeBtn = document.getElementById('likeBtn');
+                const dislikeBtn = document.getElementById('dislikeBtn');
+                likeBtn.classList.add('liked');
+                dislikeBtn.classList.add('liked');
+                likeBtn.disabled = true;
+                dislikeBtn.disabled = true;
+            }
+        }
+
+        function formatAnalysis(text) {
+            // Convert URLs to links
+            let formatted = text.replace(
+                /(https?:\/\/[^\s]+)/g,
+                '<a href="$1" target="_blank">$1</a>'
+            );
+            
+            return formatted;
+        }
+
+        window.likeAnalysis = async function(isLike) {
+            if (!currentMarket) return;
+
+            if (isLike) {
+                try {
+                    const newLikeCount = (currentMarket.likes || 0) + 1;
+                    const marketRef = ref(database, `markets/${marketId}`);
+                    await update(marketRef, { likes: newLikeCount });
+                    
+                    document.getElementById('likeCount').textContent = newLikeCount;
+                    
+                    // Save to localStorage
+                    const likedMarkets = JSON.parse(localStorage.getItem('likedMarkets') || '{}');
+                    likedMarkets[marketId] = true;
+                    localStorage.setItem('likedMarkets', JSON.stringify(likedMarkets));
+                    
+                    // Disable buttons
+                    const likeBtn = document.getElementById('likeBtn');
+                    const dislikeBtn = document.getElementById('dislikeBtn');
+                    likeBtn.classList.add('liked');
+                    dislikeBtn.classList.add('liked');
+                    likeBtn.disabled = true;
+                    dislikeBtn.disabled = true;
+                    
+                    alert('✅ Thank you for your feedback!');
+                } catch (error) {
+                    console.error('Error saving like:', error);
+                    alert('Thank you for your feedback!');
+                }
+            } else {
+                alert('Thank you for your feedback! We\'ll work on improving our analysis.');
+            }
+        };
+
+        // Load market on page load
+        loadMarket();
+    </script>
+</body>
+</html>
