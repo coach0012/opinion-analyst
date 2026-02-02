@@ -685,7 +685,7 @@
             }
 
             grid.innerHTML = filteredMarkets.map(market => `
-                <div class="market-card" onclick="viewMarketDetails(${market.id})">
+                <div class="market-card" onclick="window.location.href='market-detail.html?id=${market.id}'">
                     <div class="market-header">
                         <div class="market-icon">
                             ${market.image ? `<img src="${market.image}" style="width: 100%; height: 100%; border-radius: 8px; object-fit: cover;">` : '📊'}
@@ -707,10 +707,6 @@
                                 </div>
                             </div>
                         `).join('') : ''}
-                    </div>
-                    <div class="market-footer">
-                        <span class="volume-icon">⊕</span>
-                        <span>Vol. ${market.volume || '0 USDT'}</span>
                     </div>
                 </div>
             `).join('');
